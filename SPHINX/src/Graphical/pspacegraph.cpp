@@ -902,6 +902,7 @@ StableRegion* PSpaceGraph::getRegionFromPoint(double sup, double conf){
  * Update and draw all stable regions within the graph view.
  */
 void PSpaceGraph::drawStableRegions(QPainter *painter){
+    painter->setClipRect(QRect(QPoint(offsetx+1,offsety+1),QPoint(offsetx+size-1,offsety+size-1)));
     //Draw an example stable region
     for(int i = stRegions->size()-1; i != -1; i--) {
         updateStableRect((*stRegions)[i]);
@@ -1059,25 +1060,10 @@ void PSpaceGraph::updateStableRect(StableRegion *s)
     if(!s->selected)
         s->curColor = s->baseColor;
 
-    int n;
-
-    //Make sure the stable region is within view and has rules
-    if(sup > minSupShown && conf > minConfShown && numRules > 0){
-        //Adjust for zoom
-        if(sup > maxSupShown){
-            sup = maxSupShown;
-        }
-        sup = (sup-minSupShown)/(maxSupShown-minSupShown);
-        if(conf > maxConfShown){
-            conf = maxConfShown;
-        }
-        conf = (conf-minConfShown)/(maxConfShown-minConfShown);
-        //now save the rectangle we'll have to draw
-        s->setRect(QRect(QPoint(offsetx,offsety+(double)size*((double)1-conf)), QPoint(offsetx+(double)size*sup, offsety+(double)size)));
-    } else {
-        //Otherwise set it to an invalid rect which will not be drawn
-        s->setRect(QRect(QPoint(-12,-12), QPoint(-13,-13)));
-    }
+     sup = (sup-minSupShown)/(maxSupShown-minSupShown);
+     conf = (conf-minConfShown)/(maxConfShown-minConfShown);
+     //now save the rectangle we'll have to draw
+     s->setRect(QRect(QPoint(offsetx+(double)size*sup-10,offsety+(double)size*((double)1-conf)-10), QPoint(offsetx+(double)size*sup+10, offsety+(double)size*((double)1-conf)+10)));
 }
 
 void PSpaceGraph::resetGraph()
