@@ -2,7 +2,7 @@
 #define INDEXUPDATEEVENT_HPP
 #include <vector>
 #include "paras/Attribute.hpp"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 
 using namespace PARASProgram::Graphical;
 
@@ -13,7 +13,7 @@ namespace PARASProgram
         class IndexUpdateEvent
         {
             public:
-                vector<StableRegion*> *stableRegions;
+                vector<Nugget*> *stableRegions;
                 pair<double, double> supInterval;
                 pair<double,double> confInterval;
                 pair<int,int> allInterval;

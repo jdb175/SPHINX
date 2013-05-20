@@ -19,7 +19,7 @@ namespace PARASProgram
                 DoubleRuleTable(QWidget *par, EventController *evCont);
 
                 //event listener
-                void selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR);
+                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
                 void applicationSizeChanged(int width, int height);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);
@@ -34,8 +34,8 @@ namespace PARASProgram
 
                 bool redun;
                 RuleMode mode;
-                StableRegion *primarySelection;
-                StableRegion *secondarySelection;
+                Nugget *primarySelection;
+                Nugget *secondarySelection;
 
                 QTableView *primaryTable;
                 QTableView *secondaryTable;

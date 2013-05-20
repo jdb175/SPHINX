@@ -1,12 +1,12 @@
 #include <algorithm>
 
 #include "paras/Rule.hpp"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 
 using namespace PARASProgram;
 using namespace PARASProgram::Graphical;
 
-StableRegion::StableRegion (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr)
+Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr)
 {
     this->colorMap = cMap;
     support = sup;
@@ -18,9 +18,9 @@ StableRegion::StableRegion (ColorMap *cMap, double sup, double conf, set<Rule*> 
     selected = false;
 }
 
-StableRegion::~StableRegion(){}
+Nugget::~Nugget(){}
 
-void StableRegion::fullDelete()
+void Nugget::fullDelete()
 {
     allRules->clear();
     uniqueRules->clear();
@@ -35,11 +35,11 @@ void StableRegion::fullDelete()
 }
 
 
-void StableRegion::setRect(QRect r){
+void Nugget::setRect(QRect r){
     rect = r;
 }
 
-void StableRegion::draw(QPainter *p)
+void Nugget::draw(QPainter *p)
 {
     //Draws the stable region rectangle
     //updateRect();
@@ -51,13 +51,13 @@ void StableRegion::draw(QPainter *p)
     }
 }
 
-void StableRegion::deselect()
+void Nugget::deselect()
 {
     //Reverts the color to our base
     selected = false;
 }
 
-void StableRegion::highlight()
+void Nugget::highlight()
 {
     //Reverts the color to our base
     if(selected)
@@ -66,7 +66,7 @@ void StableRegion::highlight()
     curColor = QColor(200,200,200,255);
 }
 
-void StableRegion::select(bool secondary)
+void Nugget::select(bool secondary)
 {
     //Changes color to indicate selection
     selected = true;
@@ -80,7 +80,7 @@ void StableRegion::select(bool secondary)
     }
 }
 
-set<Rule*> *StableRegion::getRules(RuleMode mode,  bool includeRedundancies)
+set<Rule*> *Nugget::getRules(RuleMode mode,  bool includeRedundancies)
 {
     switch(mode)
     {
@@ -97,10 +97,10 @@ set<Rule*> *StableRegion::getRules(RuleMode mode,  bool includeRedundancies)
     }
 }
 
-bool StableRegion::operator < (StableRegion s){
+bool Nugget::operator < (Nugget s){
     return (support < s.support || (confidence < s.confidence && support == s.support));
 }
 
-bool StableRegion::operator > (StableRegion s){
+bool Nugget::operator > (Nugget s){
     return (support > s.support || (confidence > s.confidence && support == s.support));
 }

@@ -20,11 +20,11 @@ namespace PARASProgram
             ALL = 1
         };
 
-        class StableRegion
+        class Nugget
         {
             public:
-                StableRegion (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr);
-                ~StableRegion();
+                Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr);
+                ~Nugget();
                 void fullDelete();
                 void draw(QPainter *p);
                 void setRect(QRect r);
@@ -42,8 +42,8 @@ namespace PARASProgram
                 set<Rule*> *allRules_nr;
                 set<Rule*> *getRules(RuleMode mode, bool includeRedundancies);
 
-                bool operator < (StableRegion);
-                bool operator > (StableRegion);
+                bool operator < (Nugget);
+                bool operator > (Nugget);
 
             protected:
                 QRect rect;

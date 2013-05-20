@@ -23,7 +23,7 @@ namespace PARASProgram
                 SingleView(QWidget *parent = 0, EventController *evCont = 0, ColorMap *colorMapping = 0);
 
                 //event listener
-                void selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR);
+                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
                 void applicationSizeChanged(int width, int height);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);
@@ -45,7 +45,7 @@ namespace PARASProgram
 
                 set<Rule*> *currentRules;
 
-                StableRegion *selectedRegion;
+                Nugget *selectedRegion;
                 RuleMode ruleMode;
                 bool includeRedundancies;
 

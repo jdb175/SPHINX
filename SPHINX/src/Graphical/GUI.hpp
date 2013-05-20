@@ -7,7 +7,7 @@
 #include "paras/PARAS.hpp"
 #include "graphical/PSpaceGraph.hpp"
 #include "graphical/ruleview/RuleView.hpp"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include "graphical/EventController.hpp"
 #include "graphical/GUIEventObject.h"
 #include "paras/Rule.hpp"

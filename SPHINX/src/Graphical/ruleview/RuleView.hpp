@@ -21,7 +21,7 @@ namespace PARASProgram
                 explicit RuleView(QWidget *parent, EventController *evCont, ColorMap *coloring);
 
                 //event listener
-                void selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR);
+                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
                 void applicationSizeChanged(int width, int height);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);

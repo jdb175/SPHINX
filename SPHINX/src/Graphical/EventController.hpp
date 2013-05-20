@@ -20,7 +20,7 @@ namespace PARASProgram
                 void registerListener(EventListener* el);
                 void deregisterListener(EventListener* el);
 
-                void selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR);
+                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
                 void applicationSizeChanged(int appWidth, int appHeight);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);

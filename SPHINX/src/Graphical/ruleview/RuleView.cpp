@@ -31,7 +31,7 @@ void RuleView::paintEvent(QPaintEvent *e)
     painter.drawText(width() / 2 - fm.width("Rule Space View")/2, 30, "Rule Space View");
 }
 
-void RuleView::selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR)
+void RuleView::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
 {
     doubRT->setVisible(false);
     singRT->setVisible(true);

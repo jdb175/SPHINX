@@ -6,7 +6,7 @@
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 #include "graphical/color/ColorMap.h"
 #include <QWidget>
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include <set>
 
 namespace PARASProgram

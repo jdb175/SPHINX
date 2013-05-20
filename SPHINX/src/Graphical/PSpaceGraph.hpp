@@ -12,7 +12,7 @@
 #include <QLineEdit>
 
 #include "graphical/color/ColorMap.h"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include "graphical/EventController.hpp"
 #include "graphical/color/ColorManager.h"
 #include "graphical/color/ColorSelector.h"
@@ -35,7 +35,7 @@ namespace PARASProgram
             bool secondarySelect;
 
             void setConfig(bool bgLines, bool skyline, bool include, RuleMode ruleMode, int cardinality, int granularity);
-            void selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR);
+            void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
             void applicationSizeChanged(int width, int height);
             void updateRedundancy(bool include);
             void setRuleMode(RuleMode ruleMode);
@@ -62,7 +62,7 @@ namespace PARASProgram
             void updateShownGranularity(int g);
            private:
             void buildZoomFrame();
-            void updateStableRect(StableRegion *s);
+            void updateStableRect(Nugget *s);
             void paintEvent(QPaintEvent *);
             void drawGraph (QPainter *painter);
             void drawStableRegions(QPainter *painter);
@@ -70,8 +70,8 @@ namespace PARASProgram
             void drawCardinalitySkyline(QPainter *painter);
             void drawCursorLines(QPainter *painter);
             void highlightDominatingRegions();
-            StableRegion *getClickedRegion(QMouseEvent *event);
-            StableRegion *getRegionFromPoint(double sup, double conf);
+            Nugget *getClickedRegion(QMouseEvent *event);
+            Nugget *getRegionFromPoint(double sup, double conf);
             void normalizeZoom();
             void panDragged(QMouseEvent *event, QPoint dragLast);
             void zoomScrolled(QWheelEvent* ev);
@@ -86,9 +86,9 @@ namespace PARASProgram
 
             EventController *evCont;
 
-            std::vector<StableRegion*> *stRegions;
-            StableRegion *primarySelectedRegion;
-            StableRegion *secondarySelectedRegion;
+            std::vector<Nugget*> *stRegions;
+            Nugget *primarySelectedRegion;
+            Nugget *secondarySelectedRegion;
             vector<XYPair*> highlightedRegions;
             bool mouseDown;
 

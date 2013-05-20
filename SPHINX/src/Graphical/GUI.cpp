@@ -19,7 +19,7 @@
 #include "graphical/ruleview/RuleView.hpp"
 #include "paras/PARAS.hpp"
 #include "graphical/PSpaceGraph.hpp"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include "graphical/EventController.hpp"
 #include "util/Utility.hpp"
 
@@ -30,7 +30,7 @@ using namespace PARASProgram;
 using namespace PARASProgram::Graphical;
 
 struct compPointer {
-    bool operator() (StableRegion* i,StableRegion* j) { return (*i<*j);}
+    bool operator() (Nugget* i,Nugget* j) { return (*i<*j);}
 } compP;
 
 struct compXY {
@@ -260,11 +260,11 @@ void GUI::updateForLoadedIndex(QString fileChosen)
 
 
 
-    vector<StableRegion*> *stableRegionPoints = new vector<StableRegion*>;
-    vector<StableRegion*> truncatedRegions;
+    vector<Nugget*> *stableRegionPoints = new vector<Nugget*>;
+    vector<Nugget*> truncatedRegions;
 
 
-    StableRegion *s;
+    Nugget *s;
 
     set<Rule*> *uRules;
     set<Rule*> *allRules;
@@ -294,7 +294,7 @@ void GUI::updateForLoadedIndex(QString fileChosen)
     float truncateConf;
     float lastSup = -1;
     float lastConf = -1;
-    StableRegion* lastS;
+    Nugget* lastS;
 
     //Runtime granularity control
     //Combine the regions into truncateVal number of bins, to make them more easily visible
@@ -322,7 +322,7 @@ void GUI::updateForLoadedIndex(QString fileChosen)
         truncateConf = floor(conf * truncateVal) / truncateVal;
 
         //Create a temporary region with the truncated parameters
-        s = new StableRegion (colorMappings, truncateSup, truncateConf, allRules, uniqueRulesCur, allRulesNR, uniqueRulesCurNR);
+        s = new Nugget (colorMappings, truncateSup, truncateConf, allRules, uniqueRulesCur, allRulesNR, uniqueRulesCurNR);
         truncatedRegions.push_back(s);
     }
 
@@ -332,7 +332,7 @@ void GUI::updateForLoadedIndex(QString fileChosen)
 
 
     //Now merge any redundant regions created by the truncation, so that we don't lose any rules
-    for(std::vector<StableRegion*>::size_type i = 0; i != truncatedRegions.size(); i++)
+    for(std::vector<Nugget*>::size_type i = 0; i != truncatedRegions.size(); i++)
     {
 
         conf = truncatedRegions[i]->confidence;

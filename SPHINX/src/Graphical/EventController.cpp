@@ -1,5 +1,5 @@
 #include "graphical/EventController.hpp"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include "graphical/EventListener.hpp"
 
 using namespace PARASProgram::Graphical;
@@ -28,7 +28,7 @@ void EventController::deregisterListener(EventListener *el)
     }
 }
 
-void EventController::selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR)
+void EventController::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
 {
     for(size_t i = 0; i < listeners->size(); i++)
     {

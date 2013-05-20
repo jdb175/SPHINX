@@ -16,7 +16,7 @@
 
 #include "graphical/EventController.hpp"
 #include "graphical/PSpaceGraph.hpp"
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include "graphical/color/ColorSelector.h"
 #include "graphical/color/ColorManager.h"
 #include "graphical/color/ColorMap.h"
@@ -532,7 +532,7 @@ void PSpaceGraph::highlightDominatingRegions(){
     return;
     //de-highlight previous region set
     for(vector<XYPair*>::iterator it = highlightedRegions.begin(); it != highlightedRegions.end(); it++){
-        StableRegion* highlighted = getRegionFromPoint((*it)->getX(), (*it)->getY());
+        Nugget* highlighted = getRegionFromPoint((*it)->getX(), (*it)->getY());
         if(highlighted != NULL && highlighted != primarySelectedRegion)
             highlighted->deselect();
     }
@@ -543,7 +543,7 @@ void PSpaceGraph::highlightDominatingRegions(){
     if((primarySelectedRegion == NULL) == (secondarySelectedRegion == NULL)) return;
 
     //to start we need to get the rules for this region
-    StableRegion* region = primarySelectedRegion == NULL ? secondarySelectedRegion : primarySelectedRegion;
+    Nugget* region = primarySelectedRegion == NULL ? secondarySelectedRegion : primarySelectedRegion;
     set<Rule*> *rules = region->getRules(ruleMode, includeRedundancies);
 
     //pull all dominating points into a list
@@ -559,7 +559,7 @@ void PSpaceGraph::highlightDominatingRegions(){
     for(vector<XYPair*>::iterator it = highlightedRegions.begin(); it != highlightedRegions.end(); it++){
         //get the stable region for this point
         //if it is different form the last stable region, then highlight it
-        StableRegion* highlighted = getRegionFromPoint((*it)->getX(), (*it)->getY());
+        Nugget* highlighted = getRegionFromPoint((*it)->getX(), (*it)->getY());
         if(highlighted != NULL)
             highlighted->highlight();
    }
@@ -663,7 +663,7 @@ void PSpaceGraph::drawSkyline(QPainter *painter){
     if((primarySelectedRegion == NULL && secondarySelectedRegion == NULL) || (primarySelectedRegion != NULL && secondarySelectedRegion != NULL))
         return;
 
-    StableRegion *selectedRegion;
+    Nugget *selectedRegion;
     if(primarySelectedRegion != NULL) {
         selectedRegion = primarySelectedRegion;
     } else {
@@ -861,7 +861,7 @@ void PSpaceGraph::drawCursorLines(QPainter *painter){
 /**
  * Returns the stable region under the given mouse position, if one exists.
  */
-StableRegion* PSpaceGraph::getClickedRegion(QMouseEvent *event){
+Nugget* PSpaceGraph::getClickedRegion(QMouseEvent *event){
     if(stRegions == NULL) return NULL;
     //iterate through stable regions to find if we selected one
     double xPos = ((double)event->x()- (double)offsetx)/(double)size;
@@ -875,7 +875,7 @@ StableRegion* PSpaceGraph::getClickedRegion(QMouseEvent *event){
 /**
  * Returns the stable region at the given point, if one exists.
  */
-StableRegion* PSpaceGraph::getRegionFromPoint(double sup, double conf){
+Nugget* PSpaceGraph::getRegionFromPoint(double sup, double conf){
     if(stRegions == NULL) return NULL;
 
     if(sup < absMinSup || conf < absMinConf) return NULL;
@@ -883,9 +883,9 @@ StableRegion* PSpaceGraph::getRegionFromPoint(double sup, double conf){
     if(sup < minSupShown || conf < minConfShown) return NULL;
     if(sup > maxSupShown || conf > maxConfShown) return NULL;
 
-    StableRegion* sCur;
+    Nugget* sCur;
 
-    for(std::vector<StableRegion*>::size_type i = 0; i != stRegions->size(); i++) {
+    for(std::vector<Nugget*>::size_type i = 0; i != stRegions->size(); i++) {
         sCur = (*stRegions)[i];
         //qDebug() <<"Trying: "<< sCur->support << ", "<<sCur->confidence << "("<<sup<<", "<<conf<<")";
         //qDebug() << "    "<< (sCur->support >= sup) << ", " << (sCur->confidence >= conf);
@@ -1042,7 +1042,7 @@ QPoint PSpaceGraph::getTopRightFromSupConf(double support, double confidence){
 /**
  * Update the drawn rect of the given stable region to match the current state of the graph
  */
-void PSpaceGraph::updateStableRect(StableRegion *s)
+void PSpaceGraph::updateStableRect(Nugget *s)
 {
     double sup = s->support;
     double conf = s->confidence;
@@ -1087,7 +1087,7 @@ void PSpaceGraph::resetGraph()
  * Event listener functions
  */
 
-void PSpaceGraph::selectStableRegions(StableRegion *primarySR, StableRegion *secondarySR)
+void PSpaceGraph::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
 {
     if(primarySelectedRegion != NULL) primarySelectedRegion->deselect();
     if(secondarySelectedRegion != NULL) secondarySelectedRegion->deselect();
@@ -1248,7 +1248,7 @@ void PSpaceGraph::mouseReleaseEvent(QMouseEvent *event)
     selectSupConf->clearFocus();
     if (event->button() == Qt::LeftButton && mouseDown){
         if(!mouseDragged){
-            StableRegion *clickedRegion = getClickedRegion(event);
+            Nugget *clickedRegion = getClickedRegion(event);
 
             stringstream s("");
             if(clickedRegion != NULL){

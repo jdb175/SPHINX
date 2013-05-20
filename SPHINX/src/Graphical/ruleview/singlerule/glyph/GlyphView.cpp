@@ -1,4 +1,4 @@
-#include "graphical/StableRegion.hpp"
+#include "graphical/Nugget.hpp"
 #include <algorithm>
 #include "graphical/ruleview/singlerule/glyph/GlyphView.hpp"
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
