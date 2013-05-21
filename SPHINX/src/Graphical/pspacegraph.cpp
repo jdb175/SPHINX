@@ -864,11 +864,11 @@ void PSpaceGraph::drawCursorLines(QPainter *painter){
 Nugget* PSpaceGraph::getClickedRegion(QMouseEvent *event){
     if(stRegions == NULL) return NULL;
     //iterate through stable regions to find if we selected one
-    double xPos = ((double)event->x()- (double)offsetx)/(double)size;
-    xPos = xPos*(maxSupShown-minSupShown)+minSupShown;
-    double yPos = (double)1-((double)event->y()- (double)offsety)/(double)size;
-    yPos = yPos*(maxConfShown-minConfShown)+minConfShown;
-
+    double xPos = (double)event->x();
+    //xPos = xPos*(maxSupShown-minSupShown)+minSupShown;
+    double yPos = (double)event->y();
+    //yPos = yPos*(maxConfShown-minConfShown)+minConfShown;
+    qDebug() << xPos;
     return getRegionFromPoint(xPos, yPos);
 }
 
@@ -878,19 +878,14 @@ Nugget* PSpaceGraph::getClickedRegion(QMouseEvent *event){
 Nugget* PSpaceGraph::getRegionFromPoint(double sup, double conf){
     if(stRegions == NULL) return NULL;
 
-    if(sup < absMinSup || conf < absMinConf) return NULL;
-    if(sup > absMaxSup || conf > absMaxConf) return NULL;
-    if(sup < minSupShown || conf < minConfShown) return NULL;
-    if(sup > maxSupShown || conf > maxConfShown) return NULL;
+    if(sup < offsetx || conf < offsety) return NULL;
+    if(sup > offsetx+size || conf > offsety+size) return NULL;
 
     Nugget* sCur;
 
     for(std::vector<Nugget*>::size_type i = 0; i != stRegions->size(); i++) {
         sCur = (*stRegions)[i];
-        //qDebug() <<"Trying: "<< sCur->support << ", "<<sCur->confidence << "("<<sup<<", "<<conf<<")";
-        //qDebug() << "    "<< (sCur->support >= sup) << ", " << (sCur->confidence >= conf);
-        int numRules = sCur->getRules(ruleMode, includeRedundancies)->size();
-        if(sCur->support >= sup && sCur->confidence >= conf && numRules >0){
+        if(sCur->isClicked(sup, conf)){
           //  qDebug() << "FOUND IT";
             return sCur;
         }
@@ -908,6 +903,7 @@ void PSpaceGraph::drawStableRegions(QPainter *painter){
         updateStableRect((*stRegions)[i]);
         (*stRegions)[i]->draw(painter);
     }
+    painter->setClipping(false);
 }
 
 /**

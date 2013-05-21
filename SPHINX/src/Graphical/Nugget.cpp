@@ -2,6 +2,7 @@
 
 #include "paras/Rule.hpp"
 #include "graphical/Nugget.hpp"
+#include <QDebug>
 
 using namespace PARASProgram;
 using namespace PARASProgram::Graphical;
@@ -95,6 +96,11 @@ set<Rule*> *Nugget::getRules(RuleMode mode,  bool includeRedundancies)
         else
             return allRules_nr;
     }
+}
+
+bool Nugget::isClicked(double sup, double conf) {
+    qDebug() << "FUCK?";
+    return sup >= rect.bottomLeft().x() && sup <= rect.bottomRight().x() && conf >= rect.topLeft().y() && conf <= rect.bottomLeft().y();
 }
 
 bool Nugget::operator < (Nugget s){

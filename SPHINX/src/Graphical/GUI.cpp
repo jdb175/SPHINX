@@ -41,7 +41,7 @@ struct compXY {
 
 GUI::GUI()
 {
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "PARAS", "PARAS");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "SPHINX", "SPHINX");
     configPath = settings.fileName().toStdString();
 
     haveConfigFile = fstream(configPath.c_str()).good();

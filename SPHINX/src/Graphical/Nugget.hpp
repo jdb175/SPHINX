@@ -28,6 +28,7 @@ namespace PARASProgram
                 void fullDelete();
                 void draw(QPainter *p);
                 void setRect(QRect r);
+                bool isClicked(double sup, double conf);
                 double support;
                 double confidence;
                 bool selected;
