@@ -243,7 +243,7 @@ void PSpaceGraph::buildZoomFrame()
     selectSupConf = new QLineEdit(uniqueFrame);
     selectSupConf->move(350, 80);
     selectSupConf->setEnabled(true);
-    selectSupConf->setPlaceholderText("Support, Confidence");
+    selectSupConf->setPlaceholderText("Belief, Plausibility");
     //QRegExp rx("(1|(0?.\\d{0,4}))");//, ((1(.(0{0,4})?)|(0?.\\d{0,4}))");
 
     QRegExp rx("((1(.0{0,6})?)|(0?.[0-9]{0,6})),( )?((1(.0{0,6})?)|(0?.[0-9]{0,6}))");
@@ -419,17 +419,17 @@ void PSpaceGraph::drawGraph (QPainter *painter){
     //Draw Scales
     setFont(newFont);
     QFontMetrics fm(newFont);
-    int width_support=fm.width("Support");
-    int width_confidence=fm.width("Confidence");
+    int width_support=fm.width("Belief");
+    int width_confidence=fm.width("Plausibility");
     int f_height = fm.height();
 
-    painter->drawText(offsetx + size / 2 - fm.width("Paramater Space View")/2, offsety - 20, "Parameter Space View");
+    painter->drawText(offsetx + size / 2 - fm.width("Hypothesis View")/2, offsety - 20, "Hypothesis View");
 
-    painter->drawText(offsetx+size/2-width_support/2, offsety+size+f_height+30, "Support");
+    painter->drawText(offsetx+size/2-width_support/2, offsety+size+f_height+30, "Belief");
 
     painter->save();
     painter->rotate(270); // or 270
-    painter->drawText(-(offsety+(size+width_confidence)/2),offsetx-50, "Confidence");
+    painter->drawText(-(offsety+(size+width_confidence)/2),offsetx-50, "Plausibility");
     painter->restore();
 
     //Set Font for Scale numbers

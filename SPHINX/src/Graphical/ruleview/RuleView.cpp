@@ -28,7 +28,7 @@ void RuleView::paintEvent(QPaintEvent *e)
     setFont(newFont);
 
 
-    painter.drawText(width() / 2 - fm.width("Rule Space View")/2, 30, "Rule Space View");
+    painter.drawText(width() / 2 - fm.width("Evidence View")/2, 30, "Evidence View");
 }
 
 void RuleView::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
