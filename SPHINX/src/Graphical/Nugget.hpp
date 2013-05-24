@@ -6,7 +6,7 @@
 #include "graphical/ruleview/singlerule/glyph/Glyph.hpp"
 #include "paras/Rule.hpp"
 #include "graphical/color/ColorMap.h"
-
+#include "graphical/Shapes/Shape.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ namespace SPHINXProgram
                 ~Nugget();
                 void fullDelete();
                 void draw(QPainter *p);
-                void setRect(QRect r);
+                void setXY(int xPos, int yPos);
                 bool isClicked(double sup, double conf);
                 double support;
                 double confidence;
@@ -47,7 +47,10 @@ namespace SPHINXProgram
                 bool operator > (Nugget);
 
             protected:
-                QRect rect;
+                int xPos;
+                int yPos;
+                int radius;
+                Shape *shape;
                 ColorMap *colorMap;
 
         };

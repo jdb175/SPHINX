@@ -864,12 +864,9 @@ void PSpaceGraph::drawCursorLines(QPainter *painter){
  */
 Nugget* PSpaceGraph::getClickedRegion(QMouseEvent *event){
     if(stRegions == NULL) return NULL;
-    //iterate through stable regions to find if we selected one
+    //iterate through nuggets to find if we selected one
     double xPos = (double)event->x();
-    //xPos = xPos*(maxSupShown-minSupShown)+minSupShown;
     double yPos = (double)event->y();
-    //yPos = yPos*(maxConfShown-minConfShown)+minConfShown;
-    qDebug() << xPos;
     return getRegionFromPoint(xPos, yPos);
 }
 
@@ -1057,10 +1054,11 @@ void PSpaceGraph::updateStableRect(Nugget *s)
     if(!s->selected)
         s->curColor = s->baseColor;
 
-     sup = (sup-minSupShown)/(maxSupShown-minSupShown);
-     conf = (conf-minConfShown)/(maxConfShown-minConfShown);
-     //now save the rectangle we'll have to draw
-     s->setRect(QRect(QPoint(offsetx+(double)size*sup-10,offsety+(double)size*((double)1-conf)-10), QPoint(offsetx+(double)size*sup+10, offsety+(double)size*((double)1-conf)+10)));
+    sup = (sup-minSupShown)/(maxSupShown-minSupShown);
+    conf = (conf-minConfShown)/(maxConfShown-minConfShown);
+    //now save the rectangle we'll have to draw
+    //s->setRect(QRect(QPoint(-10,offsety+(double)size*((double)1-conf)-10), QPoint(offsetx+(double)size*sup+10, offsety+(double)size*((double)1-conf)+10)));
+    s->setXY(offsetx+(double)size*sup, offsety+(double)size*((double)1-conf));
 }
 
 void PSpaceGraph::resetGraph()

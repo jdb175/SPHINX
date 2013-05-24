@@ -2,6 +2,7 @@
 
 #include "paras/Rule.hpp"
 #include "graphical/Nugget.hpp"
+#include "graphical/Shapes/SRect.hpp"
 #include <QDebug>
 
 using namespace SPHINXProgram;
@@ -16,7 +17,9 @@ Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, s
     this->uniqueRules = uniqueRules;
     this->allRules_nr = allRules_nr;
     this->uniqueRules_nr = uniqueRules_nr;
+    shape = (Shape*) new SRect();
     selected = false;
+    radius = 10;
 }
 
 Nugget::~Nugget(){}
@@ -36,20 +39,26 @@ void Nugget::fullDelete()
 }
 
 
-void Nugget::setRect(QRect r){
-    rect = r;
+void Nugget::setXY(int xPos, int yPos){
+    this->xPos = xPos;
+    this->yPos = yPos;
 }
 
 void Nugget::draw(QPainter *p)
 {
     //Draws the stable region rectangle
     //updateRect();
-    if(!rect.isEmpty()){
+    p->save();
+    p->setBrush(curColor);
+    shape->Draw(xPos, yPos, radius, p);
+    p->restore();
+    /*if(!
+     *rect.isEmpty()){
         p->save();
         p->setBrush(curColor);
         p->drawRect(rect);
         p->restore();
-    }
+    }*/
 }
 
 void Nugget::deselect()
@@ -99,7 +108,7 @@ set<Rule*> *Nugget::getRules(RuleMode mode,  bool includeRedundancies)
 }
 
 bool Nugget::isClicked(double sup, double conf) {
-    return sup >= rect.bottomLeft().x() && sup <= rect.bottomRight().x() && conf >= rect.topLeft().y() && conf <= rect.bottomLeft().y();
+    return shape->IncludesPoint(sup, conf);
 }
 
 bool Nugget::operator < (Nugget s){

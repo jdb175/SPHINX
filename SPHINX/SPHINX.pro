@@ -16,6 +16,8 @@ HEADERS += \
     src/graphical/GUIEventObject.h \
     src/graphical/IndexUpdateEvent.hpp \
     src/graphical/PSpaceGraph.hpp \
+    src/graphical/Shapes/Shape.h \
+    src/graphical/Shapes/Shapes.h \
     src/graphical/ruleview/doublerule/DoubleRuleTable.hpp \
     src/graphical/ruleview/singlerule/glyph/Glyph.hpp \
     src/graphical/ruleview/singlerule/FilterCompleter.hpp \
@@ -63,7 +65,8 @@ HEADERS += \
     src/util/mds/IP_Matrix.h \
     src/util/mds/IP_Array.h \
     src/util/pca/PCA.h \
-    src/graphical/Nugget.hpp
+    src/graphical/Nugget.hpp \
+    src/graphical/Shapes/SRect.hpp
 
 SOURCES += \
     src/util/Convert.cpp \
@@ -78,6 +81,7 @@ SOURCES += \
     src/graphical/GUI.cpp \
     src/graphical/pspacegraph.cpp \
     src/graphical/StartupGUI.cpp \
+    src/graphical/Shapes/Shapes.cpp \
     src/graphical/ruleview/doublerule/DoubleRuleTable.cpp \
     src/graphical/ruleview/singlerule/FilterCompleter.cpp \
     src/graphical/ruleview/singlerule/FilterEditor.cpp \
@@ -112,7 +116,8 @@ SOURCES += \
     src/util/mds/MDS_Kruskal.cpp \
     src/util/mds/MDS_Embedding.cpp \
     src/util/pca/PCA.cpp \
-    src/graphical/Nugget.cpp
+    src/graphical/Nugget.cpp \
+    src/graphical/Shapes/SRect.cpp
 
 INCLUDEPATH += src
 
