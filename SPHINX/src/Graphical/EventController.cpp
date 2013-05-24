@@ -2,7 +2,7 @@
 #include "graphical/Nugget.hpp"
 #include "graphical/EventListener.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 
 EventController::EventController(GUIEventObject *g)

@@ -4,7 +4,7 @@
 #include "graphical/ruleview/singlerule/FilterCompleter.hpp"
 #include "util/Utility.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 FilterEditor::FilterEditor(QWidget *parent) : QLineEdit(parent)
 {

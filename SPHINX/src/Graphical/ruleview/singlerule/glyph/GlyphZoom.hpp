@@ -6,7 +6,7 @@
 #include "graphical/ruleview/singlerule/glyph/Glyph.hpp"
 #include "graphical/color/ColorMap.h"
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

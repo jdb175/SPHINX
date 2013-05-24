@@ -5,7 +5,7 @@
 #include "graphical/ruleview/singlerule/SingleView.hpp"
 #include "graphical/ruleview/doublerule/DoubleRuleTable.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 RuleView::RuleView(QWidget *parent, EventController *evCont, ColorMap *coloring) : QFrame(parent)
 {

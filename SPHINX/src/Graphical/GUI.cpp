@@ -26,8 +26,8 @@
 #define ICON_PARAS QIcon(QString::fromUtf8("PARAS.png"));
 
 
-using namespace PARASProgram;
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram;
+using namespace SPHINXProgram::Graphical;
 
 struct compPointer {
     bool operator() (Nugget* i,Nugget* j) { return (*i<*j);}

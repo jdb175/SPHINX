@@ -10,7 +10,7 @@
 #include "graphical/ruleview/doublerule/DoubleRuleTable.hpp"
 #include "graphical/color/ColorMap.h"
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

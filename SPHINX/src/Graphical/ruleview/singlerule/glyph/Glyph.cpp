@@ -8,8 +8,8 @@
 #define PI 3.14159265
 
 
-using namespace PARASProgram;
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram;
+using namespace SPHINXProgram::Graphical;
 
 Glyph::Glyph(ColorMap *coloring)
 {

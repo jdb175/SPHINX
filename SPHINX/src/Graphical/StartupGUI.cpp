@@ -2,7 +2,7 @@
 
 #include "graphical/GUI.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 using namespace std;
 
 

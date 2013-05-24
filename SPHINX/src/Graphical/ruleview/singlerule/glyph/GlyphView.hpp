@@ -14,7 +14,7 @@
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 #include "graphical/EventListener.hpp"
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

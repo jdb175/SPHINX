@@ -1,7 +1,7 @@
 #ifndef GUIEVENTOBJECT_H
 #define GUIEVENTOBJECT_H
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

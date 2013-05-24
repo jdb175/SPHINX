@@ -16,7 +16,7 @@
 
 using namespace std;
 
-CreateIndexDialog::CreateIndexDialog(QWidget *parent, PARASProgram::PARAS *pInstance) :
+CreateIndexDialog::CreateIndexDialog(QWidget *parent, SPHINXProgram::PARAS *pInstance) :
     QDialog(parent)
 {
     this->pInstance = pInstance;

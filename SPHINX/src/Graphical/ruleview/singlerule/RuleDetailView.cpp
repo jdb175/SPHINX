@@ -2,7 +2,7 @@
 #include "paras/Rule.hpp"
 #include "paras/Attribute.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 RuleDetailView::RuleDetailView(QWidget *parent, bool showLegend) : QWidget(parent)
 {

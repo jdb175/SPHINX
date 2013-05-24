@@ -11,7 +11,7 @@
 #include "paras/PARAS.hpp"
 #include "CreateIndexPreview.h"
 
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 
 class CreateIndexDialog : public QDialog
 {

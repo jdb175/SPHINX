@@ -13,8 +13,8 @@
 #include "graphical/ruleview/singlerule/FilterCompleter.hpp"
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 
-using namespace PARASProgram;
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram;
+using namespace SPHINXProgram::Graphical;
 
 /*
  *  Constructor & Destructor

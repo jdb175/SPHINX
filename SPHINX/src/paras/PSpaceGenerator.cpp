@@ -14,7 +14,7 @@
 #include "util/Convert.hpp"
 
 using namespace std;
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 
 
 struct rComp

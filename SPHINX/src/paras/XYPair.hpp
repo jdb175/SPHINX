@@ -5,7 +5,7 @@
 #include <string>
 
 using namespace std;
-namespace PARASProgram
+namespace SPHINXProgram
 {
 	class XYPair
 	{

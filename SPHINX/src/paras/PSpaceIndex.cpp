@@ -12,7 +12,7 @@
 #include "util/json/json.h"
 
 using namespace std;
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 
 /**
  * Constructor if there is not an already existing file for the pspaceindex.

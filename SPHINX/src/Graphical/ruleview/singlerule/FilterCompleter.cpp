@@ -4,7 +4,7 @@
 #include <iostream>
 #include "graphical/ruleview/singlerule/FilterCompleter.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 FilterCompleter::FilterCompleter() : QCompleter()
 {

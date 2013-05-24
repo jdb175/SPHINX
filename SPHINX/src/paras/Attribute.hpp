@@ -5,7 +5,7 @@
 #include "util/json/json.h"
 using namespace std;
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     class Attribute
     {

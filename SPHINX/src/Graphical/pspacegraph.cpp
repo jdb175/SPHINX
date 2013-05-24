@@ -22,7 +22,7 @@
 #include "graphical/color/ColorMap.h"
 
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 PSpaceGraph::PSpaceGraph(QWidget *parent, EventController *controller, ColorMap* cMap, ColorSelector *cSelect) : QWidget(parent)
 {
@@ -394,11 +394,12 @@ void PSpaceGraph::paintEvent(QPaintEvent *)
     //Highlgiht regions containing dominating rules
     //highlightDominatingRegions();
 
+    //Draw Hashmarks, lines, and all text
+    drawGraph(&painter);
+
     //Draw all stable regions
     if(stRegions != NULL) drawStableRegions(&painter);
 
-    //Draw Hashmarks, lines, and all text
-    drawGraph(&painter);
 
     //Draw skyline for selected region
     if(skyline)

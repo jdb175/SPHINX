@@ -5,7 +5,7 @@
 #include "graphical/EventController.hpp"
 #include "util/Utility.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 DoubleRuleTable::DoubleRuleTable(QWidget *par, EventController *evCont) : QFrame(par)
 {

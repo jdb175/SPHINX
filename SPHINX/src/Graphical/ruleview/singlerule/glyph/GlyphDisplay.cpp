@@ -12,7 +12,7 @@
 #include "util/mds/Multidimensional_scaling.h"
 #include "util/pca/PCA.h"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 GlyphDisplay::GlyphDisplay(QWidget *parent, RuleDetailView* detail, GlyphZoom *zoom, ColorMap *coloring) : QWidget(parent)
 {

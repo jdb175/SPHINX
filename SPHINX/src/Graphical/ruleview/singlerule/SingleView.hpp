@@ -12,7 +12,7 @@
 #include "graphical/ruleview/singlerule/FilterCompleter.hpp"
 
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

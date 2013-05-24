@@ -9,7 +9,7 @@
 #include "graphical/Nugget.hpp"
 #include <set>
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

@@ -12,9 +12,9 @@
 #include "graphical/GUIEventObject.h"
 #include "paras/Rule.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

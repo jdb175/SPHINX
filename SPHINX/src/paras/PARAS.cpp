@@ -12,7 +12,7 @@
 #include "apriori/Apriori.hpp"
 
 using namespace std;
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 
 /**
  * Constructor.

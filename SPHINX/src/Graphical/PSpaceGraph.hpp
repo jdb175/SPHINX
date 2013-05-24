@@ -22,7 +22,7 @@
 #define MIN_TRUNCATE_VAL 10
 
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

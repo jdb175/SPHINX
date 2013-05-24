@@ -8,7 +8,7 @@
 #include "graphical/EventController.hpp"
 #include "paras/Attribute.hpp"
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

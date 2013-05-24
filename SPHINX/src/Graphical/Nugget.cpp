@@ -4,8 +4,8 @@
 #include "graphical/Nugget.hpp"
 #include <QDebug>
 
-using namespace PARASProgram;
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram;
+using namespace SPHINXProgram::Graphical;
 
 Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr)
 {
@@ -99,7 +99,6 @@ set<Rule*> *Nugget::getRules(RuleMode mode,  bool includeRedundancies)
 }
 
 bool Nugget::isClicked(double sup, double conf) {
-    qDebug() << "FUCK?";
     return sup >= rect.bottomLeft().x() && sup <= rect.bottomRight().x() && conf >= rect.topLeft().y() && conf <= rect.bottomLeft().y();
 }
 

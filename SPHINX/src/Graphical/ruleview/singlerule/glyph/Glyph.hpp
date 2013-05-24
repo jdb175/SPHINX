@@ -9,7 +9,7 @@
 #include "paras/Attribute.hpp"
 
 using namespace std;
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

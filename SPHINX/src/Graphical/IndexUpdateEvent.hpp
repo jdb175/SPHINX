@@ -4,9 +4,9 @@
 #include "paras/Attribute.hpp"
 #include "graphical/Nugget.hpp"
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

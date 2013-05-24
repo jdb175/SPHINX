@@ -3,8 +3,8 @@
 #include "graphical/ruleview/singlerule/glyph/GlyphView.hpp"
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 
-using namespace PARASProgram;
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram;
+using namespace SPHINXProgram::Graphical;
 
 GlyphView::GlyphView(QWidget *parent, ColorMap *coloring) : QWidget(parent)
 {

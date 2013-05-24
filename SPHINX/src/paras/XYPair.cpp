@@ -4,7 +4,7 @@
 #include <sstream>
 
 
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 using namespace std;
 
 XYPair::XYPair(double first, double second)

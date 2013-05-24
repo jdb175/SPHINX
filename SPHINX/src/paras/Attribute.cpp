@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 
 Attribute::Attribute(string* name, vector<string> *attributes, vector<string> *names)
 {

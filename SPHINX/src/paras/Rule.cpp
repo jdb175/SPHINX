@@ -7,7 +7,7 @@
 #include "util/json/json.h"
 
 using namespace std;
-using namespace PARASProgram;
+using namespace SPHINXProgram;
 
 Rule::Rule(vector<string*> *strCombination, vector<string*> *strRemaining, double Support, double Confidence, vector<XYPair*> *DominatePoints)
 {
@@ -51,7 +51,7 @@ double Rule::getConfidence()
 	return _confidence;
 }
 
-PARASProgram::XYPair *Rule::getDominantPointSimple()
+SPHINXProgram::XYPair *Rule::getDominantPointSimple()
 {
 	return _dominatePoint_simple;
 }
@@ -61,7 +61,7 @@ void Rule::setDominantPointSimple(XYPair *value)
 	_dominatePoint_simple = value;
 }
 
-PARASProgram::XYPair *Rule::getDominantPointStrict()
+SPHINXProgram::XYPair *Rule::getDominantPointStrict()
 {
 	return _dominatePoint_strict;
 }

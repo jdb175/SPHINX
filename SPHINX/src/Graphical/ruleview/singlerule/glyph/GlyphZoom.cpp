@@ -3,7 +3,7 @@
 #include <QPaintEvent>
 #include <QRect>
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 GlyphZoom::GlyphZoom(QWidget *parent, ColorMap *coloring) : QFrame(parent)
 {

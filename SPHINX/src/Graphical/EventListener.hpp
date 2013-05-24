@@ -3,7 +3,7 @@
 #include "graphical/Nugget.hpp"
 #include "graphical/IndexUpdateEvent.hpp"
 
-namespace PARASProgram
+namespace SPHINXProgram
 {
     namespace Graphical
     {

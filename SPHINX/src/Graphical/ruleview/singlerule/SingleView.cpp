@@ -5,7 +5,7 @@
 #include "graphical/ruleview/singlerule/FilterCompleter.hpp"
 #include <iostream>
 
-using namespace PARASProgram::Graphical;
+using namespace SPHINXProgram::Graphical;
 
 SingleView::SingleView(QWidget *parent, EventController *evCont, ColorMap *colorMapping) : QWidget(parent)
 {
