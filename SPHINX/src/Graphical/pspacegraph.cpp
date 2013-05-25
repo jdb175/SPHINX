@@ -32,6 +32,8 @@ PSpaceGraph::PSpaceGraph(QWidget *parent, EventController *controller, ColorMap*
     this->evCont = controller;
 
     secondarySelect = false;
+    grabbedConfSlider = false;
+    grabbedSupSlider = false;
     stRegions = NULL;
     primarySelectedRegion = NULL;
     secondarySelectedRegion = NULL;
@@ -48,6 +50,8 @@ PSpaceGraph::PSpaceGraph(QWidget *parent, EventController *controller, ColorMap*
     maxSupShown = absMaxSup;
     minConfShown = absMinConf;
     maxConfShown = absMaxConf;
+    minSigSup = absMinSup;
+    minSigConf = absMinConf;
 
     uniqueMinRules = 0;
     uniqueMaxRules = 0;
@@ -377,7 +381,7 @@ void PSpaceGraph::paintEvent(QPaintEvent *)
 {
     //Handle cursor hiding
     QPoint mousePos = this->mapFromGlobal(QCursor::pos());
-    if(mousePos.x() <= offsetx+size && mousePos.x() >= offsetx && mousePos.y() <= offsety+size && mousePos.y() >= offsety && ! colorSelect->isVisible() && hideCursor){
+    if(mousePos.x() <= offsetx+size && mousePos.x() >= offsetx && mousePos.y() <= offsety+size && mousePos.y() >= offsety && ! colorSelect->isVisible() && hideCursor && !grabbedSupSlider && !grabbedConfSlider){
         qApp->setOverrideCursor( QCursor( Qt::BlankCursor ) );
     } else {
         qApp->setOverrideCursor( QCursor( Qt::ArrowCursor ) );
@@ -405,9 +409,70 @@ void PSpaceGraph::paintEvent(QPaintEvent *)
     if(skyline)
         useCardinality ? drawCardinalitySkyline(&painter) : drawSkyline(&painter);
 
+    //Draw significane sliders
+    drawSignificanceSliders(&painter);
+
     //Draw cursor position lines
     drawCursorLines(&painter);
 }
+
+/**
+ * Draw significance sliders
+ */
+void PSpaceGraph::drawSignificanceSliders (QPainter *painter){
+    QPen sigPen(QBrush(Qt::SolidPattern), 4);
+    QPen transPen(QBrush(Qt::SolidPattern), 2);
+    sigPen.setColor(QColor(0,150,0));
+    transPen.setColor(QColor(0,102,0,175));
+
+    painter->setPen(sigPen);
+    painter->setBrush(QBrush(QColor(0,150,0, 255)));
+
+    //draw line vertical
+    double sup = (minSigSup-minSupShown)/(maxSupShown-minSupShown);
+    if(sup < 0) {
+        sup = 0;
+        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setPen(transPen);
+    }
+    if(sup > 1){
+        sup = 1;
+        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setPen(transPen);
+    }
+    double supPixVal = offsetx+(double)size*sup;
+
+
+    painter->drawLine(supPixVal, offsety+2, supPixVal, offsety+size+4);
+    painter->drawRoundedRect(supPixVal-5, offsety+size+4, 10, 40, 4, 4);
+
+    painter->setPen(sigPen);
+    painter->setBrush(QBrush(QColor(0,150,0, 255)));
+
+    //draw line horizontal
+    double conf = (minSigConf-minConfShown)/(maxConfShown-minConfShown);
+    if(conf < 0) {
+        conf = 0;
+        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setPen(transPen);
+    }
+    if(conf > 1){
+        conf = 1;
+        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setPen(transPen);
+    }
+    double confPixVal = offsety+(double)size*(1-conf);
+
+    painter->drawLine(offsetx-4, confPixVal, offsetx+size, confPixVal);
+    painter->drawRoundedRect(offsetx-44, confPixVal-5, 40, 10, 4, 4);
+
+    //draw square
+    painter->setPen(QPen(QColor(0,0,0,0)));
+    painter->setBrush(QBrush(QColor(0,0,0, 40)));
+    painter->drawRect(QRect(QPoint(offsetx, confPixVal), QPoint(supPixVal, offsety+size)));
+
+}
+
 
 /**
  * Draw graph scales and hash marks
@@ -819,7 +884,7 @@ void PSpaceGraph::drawSkyline(QPainter *painter){
  * @param painter the painter for this paint event
  */
 void PSpaceGraph::drawCursorLines(QPainter *painter){
-    if(colorSelect->isVisible()) return;
+    if(colorSelect->isVisible() || grabbedSupSlider || grabbedConfSlider) return;
 
     QPoint mousePos = this->mapFromGlobal(QCursor::pos());
     //Ensure that we are within the graph view
@@ -896,6 +961,7 @@ Nugget* PSpaceGraph::getRegionFromPoint(double sup, double conf){
  * Update and draw all stable regions within the graph view.
  */
 void PSpaceGraph::drawStableRegions(QPainter *painter){
+    painter->setClipping(true);
     painter->setClipRect(QRect(QPoint(offsetx+1,offsety+1),QPoint(offsetx+size-1,offsety+size-1)));
     //Draw an example stable region
     for(int i = stRegions->size()-1; i != -1; i--) {
@@ -1212,6 +1278,15 @@ void PSpaceGraph::closeIndex()
  */
 void PSpaceGraph::mousePressEvent(QMouseEvent *event)
 {
+    double sup = std::min(std::max((minSigSup-minSupShown)/(maxSupShown-minSupShown), (double) 0), 1.0);
+    double supPixVal = offsetx+(double)size*sup;
+
+    double conf = std::min(std::max((minSigConf-minConfShown)/(maxConfShown-minConfShown), 0.0), 1.0);
+    double confPixVal = offsety+(double)size*(1-conf);
+
+    grabbedSupSlider = (event->x() >= supPixVal-5 && event->x() <= supPixVal+5 && event->y() >= offsety+size+4 && event->y() <= offsety+size+44);
+    grabbedConfSlider = (event->x() >= offsetx-44 && event->x() <= offsetx-4 && event->y() >= confPixVal-5 && event->y() <= confPixVal+5);
+
     if (event->button() == Qt::LeftButton && event->x() > offsetx && event->x() < offsetx+ size && event->y() > offsety && event->y() < offsety+size){
         dragLast = event->pos();
         mouseDown = true;
@@ -1232,6 +1307,15 @@ void PSpaceGraph::mouseMoveEvent(QMouseEvent *event)
             dragLast = event->pos();
         }
     }
+    if(grabbedSupSlider){
+        double supVal = ((float)event->x()-(float)offsetx)/size * (maxSupShown-minSupShown)+minSupShown;
+        minSigSup = std::max(std::min(supVal, maxSupShown), minSupShown);
+    }
+
+    if(grabbedConfSlider) {
+        double confVal = ((1 - ((float)event->y()-(float)offsety)/size) * (maxConfShown-minConfShown))+minConfShown;
+        minSigConf = std::max(std::min(confVal, maxConfShown), minConfShown);
+    }
     this->repaint();
 }
 
@@ -1242,6 +1326,8 @@ void PSpaceGraph::mouseMoveEvent(QMouseEvent *event)
 void PSpaceGraph::mouseReleaseEvent(QMouseEvent *event)
 {
     selectSupConf->clearFocus();
+    grabbedSupSlider = false;
+    grabbedConfSlider = false;
     if (event->button() == Qt::LeftButton && mouseDown){
         if(!mouseDragged){
             Nugget *clickedRegion = getClickedRegion(event);

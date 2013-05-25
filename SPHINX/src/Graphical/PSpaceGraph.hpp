@@ -69,6 +69,7 @@ namespace SPHINXProgram
             void drawSkyline(QPainter *painter);
             void drawCardinalitySkyline(QPainter *painter);
             void drawCursorLines(QPainter *painter);
+            void drawSignificanceSliders(QPainter *painter);
             void highlightDominatingRegions();
             Nugget *getClickedRegion(QMouseEvent *event);
             Nugget *getRegionFromPoint(double sup, double conf);
@@ -91,6 +92,8 @@ namespace SPHINXProgram
             Nugget *secondarySelectedRegion;
             vector<XYPair*> highlightedRegions;
             bool mouseDown;
+            bool grabbedSupSlider;
+            bool grabbedConfSlider;
 
             QPoint dragLast;
 
@@ -123,6 +126,9 @@ namespace SPHINXProgram
             int maxRules;
             int minRules;
             int curGranularity;
+
+            double minSigSup;
+            double minSigConf;
 
             bool hideCursor;
 
