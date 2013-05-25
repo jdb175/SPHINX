@@ -8,6 +8,7 @@
 #include "graphical/color/ColorMap.h"
 #include "graphical/Shapes/Shape.h"
 
+
 using namespace std;
 
 namespace SPHINXProgram
@@ -31,6 +32,9 @@ namespace SPHINXProgram
                 bool isClicked(double sup, double conf);
                 double support;
                 double confidence;
+                int radius;
+                int xPos;
+                int yPos;
                 bool selected;
                 void deselect();
                 void select(bool secondary);
@@ -47,9 +51,6 @@ namespace SPHINXProgram
                 bool operator > (Nugget);
 
             protected:
-                int xPos;
-                int yPos;
-                int radius;
                 Shape *shape;
                 ColorMap *colorMap;
 

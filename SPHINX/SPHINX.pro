@@ -66,7 +66,8 @@ HEADERS += \
     src/util/mds/IP_Array.h \
     src/util/pca/PCA.h \
     src/graphical/Nugget.hpp \
-    src/graphical/Shapes/SRect.hpp
+    src/graphical/Shapes/SRect.hpp \
+    src/graphical/Shapes/SCircle.h
 
 SOURCES += \
     src/util/Convert.cpp \
@@ -117,7 +118,8 @@ SOURCES += \
     src/util/mds/MDS_Embedding.cpp \
     src/util/pca/PCA.cpp \
     src/graphical/Nugget.cpp \
-    src/graphical/Shapes/SRect.cpp
+    src/graphical/Shapes/SRect.cpp \
+    src/graphical/Shapes/SCircle.cpp
 
 INCLUDEPATH += src
 

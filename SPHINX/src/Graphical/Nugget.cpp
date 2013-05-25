@@ -2,7 +2,9 @@
 
 #include "paras/Rule.hpp"
 #include "graphical/Nugget.hpp"
+#include "graphical/Shapes/SCircle.h"
 #include "graphical/Shapes/SRect.hpp"
+
 #include <QDebug>
 
 using namespace SPHINXProgram;
@@ -17,7 +19,11 @@ Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, s
     this->uniqueRules = uniqueRules;
     this->allRules_nr = allRules_nr;
     this->uniqueRules_nr = uniqueRules_nr;
-    shape = (Shape*) new SRect();
+    if((float)rand()/(float)RAND_MAX > 0.5) {
+        shape = (Shape*) new SCircle();
+    } else {
+        shape = (Shape*) new SRect();
+    }
     selected = false;
     radius = 10;
 }

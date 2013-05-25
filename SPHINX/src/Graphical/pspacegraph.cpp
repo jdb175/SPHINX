@@ -883,6 +883,7 @@ Nugget* PSpaceGraph::getRegionFromPoint(double sup, double conf){
 
     for(std::vector<Nugget*>::size_type i = 0; i != stRegions->size(); i++) {
         sCur = (*stRegions)[i];
+        //to avoid more complex checks when possible
         if(sCur->isClicked(sup, conf)){
           //  qDebug() << "FOUND IT";
             return sCur;

@@ -1,19 +1,21 @@
-#ifndef SRECT_HPP
-#define SRECT_HPP
+#ifndef SCIRCLE_H
+#define SCIRCLE_H
 
 #include <QPainter>
-#include <QRect>
 #include "Graphical/Shapes/Shape.h"
 
-class SRect : public Shape
+class SCircle : public Shape
 {
 public:
-    SRect();
+    SCircle();
     void Draw (double x, double y, float radius, QPainter *p);
     bool IncludesPoint (double x, double y);
-    ~SRect();
+    ~SCircle();
+
 private:
-    QRect r;
+    float radius;
+    double xPos;
+    double yPos;
 };
 
-#endif // SRECT_HPP
+#endif // SCIRCLE_H
