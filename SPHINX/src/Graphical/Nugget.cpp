@@ -3,6 +3,7 @@
 #include "paras/Rule.hpp"
 #include "graphical/Nugget.hpp"
 #include "graphical/Shapes/SCircle.h"
+#include "graphical/Shapes/STriangle.h"
 #include "graphical/Shapes/SRect.hpp"
 
 #include <QDebug>
@@ -19,10 +20,15 @@ Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, s
     this->uniqueRules = uniqueRules;
     this->allRules_nr = allRules_nr;
     this->uniqueRules_nr = uniqueRules_nr;
-    if((float)rand()/(float)RAND_MAX > 0.5) {
+
+    //temporary random shapes
+    float rVal = (float)rand()/(float)RAND_MAX;
+    if(rVal > 0.66) {
         shape = (Shape*) new SCircle();
-    } else {
+    } else if (rVal > 0.33) {
         shape = (Shape*) new SRect();
+    } else {
+        shape = (Shape*) new STriangle();
     }
     selected = false;
     radius = 10;

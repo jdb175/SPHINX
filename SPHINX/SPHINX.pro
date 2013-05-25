@@ -67,7 +67,8 @@ HEADERS += \
     src/util/pca/PCA.h \
     src/graphical/Nugget.hpp \
     src/graphical/Shapes/SRect.hpp \
-    src/graphical/Shapes/SCircle.h
+    src/graphical/Shapes/SCircle.h \
+    src/graphical/Shapes/STriangle.h
 
 SOURCES += \
     src/util/Convert.cpp \
@@ -119,7 +120,8 @@ SOURCES += \
     src/util/pca/PCA.cpp \
     src/graphical/Nugget.cpp \
     src/graphical/Shapes/SRect.cpp \
-    src/graphical/Shapes/SCircle.cpp
+    src/graphical/Shapes/SCircle.cpp \
+    src/graphical/Shapes/STriangle.cpp
 
 INCLUDEPATH += src
 
