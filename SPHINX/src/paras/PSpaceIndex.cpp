@@ -11,6 +11,11 @@
 #include "util/Utility.hpp"
 #include "util/json/json.h"
 
+#include "src/Hypo/dempstershafer.hpp"
+#include "src/Hypo/learningclassificator.hpp"
+#include "src/Hypo/csvreader.hpp"
+#include "src/Hypo/sleep.cpp"
+
 using namespace std;
 using namespace SPHINXProgram;
 
@@ -373,8 +378,87 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
         return;
     }
 
+    //initialize
+    //get data file
+    Json::Value csvFile = root["datafile"];
+    CSVReader csv(csvFile.asString());
+
+    // create Dempster-Shafer universe
+    DempsterShaferUniverse universe;
+
+    // create the feature classificator with online learning
+    cout << "processing evidence types\n";
+    Json::Value evidenceType = root["evidence_types"];
+    int classifications[csv.number_of_columns()];
+    //initialize classifications
+    for(int i = 0; i < csv.number_of_columns(); ++i){
+        classifications[i] = -1;
+    }
+
+    bitset<MAX_HYPOTHESESES> bitsets;
+    set<void*> hypotheses_names;
+
+    LearningClassificator classificator(0.05, evidenceType.size());
+
+    for(Json::Value::iterator evidenceIterator = evidenceType.begin(); evidenceIterator != evidenceType.end(); ++evidenceIterator) {
+        Json::Value type = *evidenceIterator;
+        double avg = classificator.add_feature(type.get("avg", 0).asDouble());
+        classifications[type.get("column", 0).asInt()] == avg;
+        cout << "****Adding feature: " << type.get("name", 0).asCString() <<endl;
+        cout<<"   *Average = "<< type.get("avg", 0).asDouble() << endl;
+        cout<<"   *Column = "<< type.get("column", 0).asInt() << endl;
+
+
+        //minimum hypos
+        Json::Value minVals = type.get("hypo_less", 0);
+        vector<string> hypothesesMin;
+        //get them frpm json
+        for(Json::Value::iterator minIt = minVals.begin(); minIt != minVals.end(); ++minIt) {
+            Json::Value str = *minIt;
+            hypothesesMin.push_back(str.asString());
+        }
+        //sort them (for consistency)
+        std::sort(hypothesesMin.begin(), hypothesesMin.end());
+
+        //now concatenate them
+        stringstream minCombined;
+        minCombined << *hypothesesMin.begin();
+        for(vector<string>::iterator it = ++hypothesesMin.begin(); it != hypothesesMin.end(); ++it) {
+            minCombined << "_and_" << *it;
+        }
+
+        hypotheses_names.insert((void*) new string(minCombined.str()));
+        cout << "   *Minimum hypotheses: "<<minCombined.str() << endl;
+
+        //maximum hypos
+        Json::Value maxVals = type.get("hypo_more", 0);
+        vector<string> hypothesesMax;
+        //get them frpm json
+        for(Json::Value::iterator maxIt = maxVals.begin(); maxIt != maxVals.end(); ++maxIt) {
+            Json::Value str = *maxIt;
+            hypothesesMax.push_back(str.asString());
+        }
+        //sort them (for consistency)
+        std::sort(hypothesesMax.begin(), hypothesesMax.end());
+
+        //now concatenate them
+        stringstream maxCombined;
+        maxCombined << *hypothesesMax.begin();
+        for(vector<string>::iterator it = ++hypothesesMax.begin(); it != hypothesesMax.end(); ++it) {
+            maxCombined << "_and_" << *it;
+        }
+
+        hypotheses_names.insert((void*) new string(maxCombined.str()));
+        cout << "   *Maximum hypotheses: " <<maxCombined.str() << endl;
+    }
+
+    //add all hypothesis permutations
+    universe.add_hypotheseses(hypotheses_names);
+
+
+
     //load pspacepoints
-    Json::Value xyPair = root["points"];
+   /* Json::Value xyPair = root["points"];
     for(Json::Value::iterator xyIterator = xyPair.begin(); xyIterator != xyPair.end(); ++xyIterator)
     {
         Json::Value xyVal = *xyIterator;
@@ -473,6 +557,6 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
         Attribute *newAttr = new Attribute(new string(attrName),values,names);
 
         this->addAttribute(newAttr);
-    }
+    }*/
 }
 
