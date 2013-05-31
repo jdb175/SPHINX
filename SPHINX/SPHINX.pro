@@ -68,7 +68,10 @@ HEADERS += \
     src/graphical/Nugget.hpp \
     src/graphical/Shapes/SRect.hpp \
     src/graphical/Shapes/SCircle.h \
-    src/graphical/Shapes/STriangle.h
+    src/graphical/Shapes/STriangle.h \
+    src/Hypo/csvreader.hpp \
+    src/Hypo/dempsterschafer.hpp \
+    src/Hypo/learningclassificator.hpp
 
 SOURCES += \
     src/util/Convert.cpp \
@@ -121,7 +124,11 @@ SOURCES += \
     src/graphical/Nugget.cpp \
     src/graphical/Shapes/SRect.cpp \
     src/graphical/Shapes/SCircle.cpp \
-    src/graphical/Shapes/STriangle.cpp
+    src/graphical/Shapes/STriangle.cpp \
+    src/Hypo/csvreader.cpp \
+    src/Hypo/dempsterschafer.cpp \
+    src/Hypo/learningclassificator.cpp \
+    src/Hypo/sleep.cpp
 
 INCLUDEPATH += src
 

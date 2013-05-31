@@ -1,0 +1,22 @@
+{
+	"datafile" : "E_019b.csv",
+	"evidence_types" : [{ 
+			"column" : 1,
+			"name" : "Eye Aperture",
+			"avg" : 18,
+			"hypo_less" : ["Fear", "Surprise"],
+			"hypo_more" : ["Disgust", "Disdain"]
+		},{ 
+			"column" : 2,
+			"name" : "Mouth Opening",
+			"avg" : 23,
+			"hypo_less" : ["Surprise"],
+			"hypo_more" : ["Disgust", "Anger"]
+		},{ 
+			"column" : 3,
+			"name" : "Furrow Count",
+			"avg" : 527,
+			"hypo_less" : ["Fear", Surprise"],
+			"hypo_more" : ["Anger"]
+		}]
+}

@@ -409,7 +409,7 @@ void PSpaceGraph::paintEvent(QPaintEvent *)
     if(skyline)
         useCardinality ? drawCardinalitySkyline(&painter) : drawSkyline(&painter);
 
-    //Draw significane sliders
+    //Draw significance sliders
     drawSignificanceSliders(&painter);
 
     //Draw cursor position lines
@@ -422,22 +422,22 @@ void PSpaceGraph::paintEvent(QPaintEvent *)
 void PSpaceGraph::drawSignificanceSliders (QPainter *painter){
     QPen sigPen(QBrush(Qt::SolidPattern), 4);
     QPen transPen(QBrush(Qt::SolidPattern), 2);
-    sigPen.setColor(QColor(0,150,0));
-    transPen.setColor(QColor(0,102,0,175));
+    sigPen.setColor(QColor(70,150,70));
+    transPen.setColor(QColor(70,102,70,175));
 
     painter->setPen(sigPen);
-    painter->setBrush(QBrush(QColor(0,150,0, 255)));
+    painter->setBrush(QBrush(QColor(70,150,70, 255)));
 
     //draw line vertical
     double sup = (minSigSup-minSupShown)/(maxSupShown-minSupShown);
     if(sup < 0) {
         sup = 0;
-        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setBrush(QBrush(QColor(70,102,70, 175)));
         painter->setPen(transPen);
     }
     if(sup > 1){
         sup = 1;
-        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setBrush(QBrush(QColor(70,102,70, 175)));
         painter->setPen(transPen);
     }
     double supPixVal = offsetx+(double)size*sup;
@@ -447,18 +447,18 @@ void PSpaceGraph::drawSignificanceSliders (QPainter *painter){
     painter->drawRoundedRect(supPixVal-5, offsety+size+4, 10, 40, 4, 4);
 
     painter->setPen(sigPen);
-    painter->setBrush(QBrush(QColor(0,150,0, 255)));
+    painter->setBrush(QBrush(QColor(70,150,70, 255)));
 
     //draw line horizontal
     double conf = (minSigConf-minConfShown)/(maxConfShown-minConfShown);
     if(conf < 0) {
         conf = 0;
-        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setBrush(QBrush(QColor(70,102,70, 175)));
         painter->setPen(transPen);
     }
     if(conf > 1){
         conf = 1;
-        painter->setBrush(QBrush(QColor(0,102,0, 175)));
+        painter->setBrush(QBrush(QColor(70,102,70, 175)));
         painter->setPen(transPen);
     }
     double confPixVal = offsety+(double)size*(1-conf);

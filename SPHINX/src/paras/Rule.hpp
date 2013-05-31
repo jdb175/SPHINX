@@ -45,6 +45,8 @@ namespace SPHINXProgram
 			bool operator<(Rule *other);
 			bool operator>(Rule *other);
 			bool operator==(Rule *other);
+
+            string Hypothesis;
 	};
 }
 
