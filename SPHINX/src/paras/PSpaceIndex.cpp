@@ -387,7 +387,7 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
     DempsterShaferUniverse universe;
 
     // create the feature classificator with online learning
-    cout << "processing evidence types\n";
+    cout << "Processing evidence types\n";
     Json::Value evidenceType = root["evidence_types"];
     int classifications[csv.number_of_columns()];
     //initialize classifications
@@ -395,15 +395,17 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
         classifications[i] = -1;
     }
 
-    bitset<MAX_HYPOTHESESES> bitsets;
     set<void*> hypotheses_names;
+    bitset<MAX_HYPOTHESESES> *bitsetsMin = new bitset<MAX_HYPOTHESESES>[csv.number_of_columns()];
+    bitset<MAX_HYPOTHESESES> *bitsetsMax = new bitset<MAX_HYPOTHESESES>[csv.number_of_columns()];
+
 
     LearningClassificator classificator(0.05, evidenceType.size());
 
     for(Json::Value::iterator evidenceIterator = evidenceType.begin(); evidenceIterator != evidenceType.end(); ++evidenceIterator) {
         Json::Value type = *evidenceIterator;
         double avg = classificator.add_feature(type.get("avg", 0).asDouble());
-        classifications[type.get("column", 0).asInt()] == avg;
+        classifications[type.get("column", 0).asInt()] = avg;
         cout << "****Adding feature: " << type.get("name", 0).asCString() <<endl;
         cout<<"   *Average = "<< type.get("avg", 0).asDouble() << endl;
         cout<<"   *Column = "<< type.get("column", 0).asInt() << endl;
@@ -411,152 +413,96 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
 
         //minimum hypos
         Json::Value minVals = type.get("hypo_less", 0);
-        vector<string> hypothesesMin;
-        //get them frpm json
+        set<void*> hypothesesMin;
+        //get them from json
+        cout << "   *Minimum Hypotheses: ";
+
         for(Json::Value::iterator minIt = minVals.begin(); minIt != minVals.end(); ++minIt) {
             Json::Value str = *minIt;
-            hypothesesMin.push_back(str.asString());
-        }
-        //sort them (for consistency)
-        std::sort(hypothesesMin.begin(), hypothesesMin.end());
+            hypothesesMin.insert((void*) new string(str.asString()));
+            hypotheses_names.insert((void*) new string(str.asString()));
 
-        //now concatenate them
-        stringstream minCombined;
-        minCombined << *hypothesesMin.begin();
-        for(vector<string>::iterator it = ++hypothesesMin.begin(); it != hypothesesMin.end(); ++it) {
-            minCombined << "_and_" << *it;
+            if(minIt != minVals.begin()){
+                cout << " and";
+            }
+            cout << " " << str.asString();
         }
+        cout << endl;
 
-        hypotheses_names.insert((void*) new string(minCombined.str()));
-        cout << "   *Minimum hypotheses: "<<minCombined.str() << endl;
+        //create the bitset
+        bitsetsMin[type.get("column", 0).asInt()] = universe.bitset_representation(hypothesesMin);
 
         //maximum hypos
         Json::Value maxVals = type.get("hypo_more", 0);
-        vector<string> hypothesesMax;
-        //get them frpm json
+        set<void*> hypothesesMax;
+        //get them from json
+        cout << "   *Maximum Hypotheses: ";
         for(Json::Value::iterator maxIt = maxVals.begin(); maxIt != maxVals.end(); ++maxIt) {
             Json::Value str = *maxIt;
-            hypothesesMax.push_back(str.asString());
-        }
-        //sort them (for consistency)
-        std::sort(hypothesesMax.begin(), hypothesesMax.end());
+            hypothesesMax.insert((void*) new string(str.asString()));
+            hypotheses_names.insert((void*) new string(str.asString()));
 
-        //now concatenate them
-        stringstream maxCombined;
-        maxCombined << *hypothesesMax.begin();
-        for(vector<string>::iterator it = ++hypothesesMax.begin(); it != hypothesesMax.end(); ++it) {
-            maxCombined << "_and_" << *it;
+            if(maxIt != maxVals.begin()){
+                cout << " and";
+            }
+            cout << " " << str.asString();
         }
+        cout << endl;
+        //create the bitset
+        bitsetsMax[type.get("column", 0).asInt()] = universe.bitset_representation(hypothesesMax);
 
-        hypotheses_names.insert((void*) new string(maxCombined.str()));
-        cout << "   *Maximum hypotheses: " <<maxCombined.str() << endl;
+        cout << "   *" << bitsetsMin[type.get("column", 0).asInt()] << endl;
+        cout << "   *" << bitsetsMax[type.get("column", 0).asInt()] << endl;
     }
 
     //add all hypothesis permutations
     universe.add_hypotheseses(hypotheses_names);
 
+    return;
+    //now iterate through csv file
+    for(int i=0; i<csv.number_of_rows(); i++) {
+        vector<int> frame = csv.row(i);
+        vector<Evidence> evidenceItems;
 
+        cout << "Classifying row " << i << endl;
 
-    //load pspacepoints
-   /* Json::Value xyPair = root["points"];
-    for(Json::Value::iterator xyIterator = xyPair.begin(); xyIterator != xyPair.end(); ++xyIterator)
-    {
-        Json::Value xyVal = *xyIterator;
-        double x = xyVal.get("x", 0).asDouble();
-        double y = xyVal.get("y",0).asDouble();
-        XYPair *newPair = new XYPair(x,y);
-        paramSpacePoints->push_back(newPair);
+        //Classify features
+        for(int j = 0; j < csv.number_of_columns(); ++j){
+            //Ignore unused columns
+            if(classifications[j] == -1) {
+                cout << "    Skipping column " << j << endl;
+                continue;
+            }
+
+            // evidence
+            cout << "    Classifying column " << j << " value of " << frame.at(j) <<", ";
+            Evidence curEvidence = universe.add_evidence();
+            double evidenceClassification = classificator.classify(classifications[j], frame.at(j));
+            evidenceClassification *= 0.9; // we don't want 1.0 as mass
+            if(evidenceClassification >= 0.0) {
+                // large classification
+                cout << "large";
+                curEvidence.add_focal_set(evidenceClassification, bitsetsMax[j]);
+            } else {
+                // small classification
+                cout << "small";
+                curEvidence.add_focal_set(-evidenceClassification, bitsetsMin[j]);
+            }
+            curEvidence.add_omega_set();
+            evidenceItems.push_back(curEvidence);
+            curEvidence.best_match();
+            cout << ", " << *((string*) curEvidence.best_match()) << endl;
+        }
+
+        //Combine Features
+        Evidence combined_features = evidenceItems[0];
+        for(vector<Evidence>::size_type j = 1; j < evidenceItems.size(); ++j){
+            combined_features = combined_features & evidenceItems[j];
+        }
+
+        //classify
+        string* hypothesis = (string*) combined_features.best_match();
+        cout << "    *** Final Classification: "<< *hypothesis << endl;
     }
-
-    //set the stable region points
-    this->setStableRegionPoints(Utility::distinctPoints(paramSpacePoints));
-
-    //load the rules.
-    Json::Value ruleMap = root["rules"];
-    for(Json::Value::iterator ruleMapIterator = ruleMap.begin(); ruleMapIterator != ruleMap.end(); ++ruleMapIterator)
-    {
-        Json::Value currentMap = *ruleMapIterator;
-        string key = currentMap.get("key", "null").asString();
-        set<Rule*> *rulesSet = new set<Rule*>();
-        Json::Value rules = currentMap["vals"];
-        for(Json::Value::iterator ruleIterator = rules.begin(); ruleIterator != rules.end(); ++ruleIterator)
-        {
-            Json::Value currentRule = *ruleIterator;
-            vector<string*>* stringAnte = new vector<string*>();
-            vector<string*>* stringCons = new vector<string*>();
-
-            Json::Value ante = currentRule["ant"];
-            for(Json::Value::iterator antIterator = ante.begin(); antIterator != ante.end(); ++antIterator)
-            {
-                Json::Value currentAnte = *antIterator;
-                string *anteMember = new string( currentAnte.asString());
-                stringAnte->push_back(anteMember);
-            }
-
-            Json::Value con = currentRule["con"];
-            for(Json::Value::iterator conIterator = con.begin(); conIterator != con.end(); ++conIterator)
-            {
-                Json::Value currentCon = *conIterator;
-                string *conMember = new string( currentCon.asString());
-                stringCons->push_back(conMember);
-            }
-
-            double support = currentRule.get("sup", 0).asDouble();
-            double conf = currentRule.get("conf", 0).asDouble();
-
-            Rule *newRule = new Rule(stringAnte, stringCons, support, conf, NULL);
-
-            double simpleX = currentRule["sim"].get("x", -1).asDouble();
-            double simpleY = currentRule["sim"].get("y", -1).asDouble();
-            double domX = currentRule["dom"].get("x", -1).asDouble();
-            double domY = currentRule["dom"].get("y", -1).asDouble();
-
-            if(simpleX != -1 && simpleY != -1)
-            {
-                XYPair *simple = new XYPair(simpleX, simpleY);
-                newRule->setDominantPointSimple(simple);
-            }
-
-            if(domX != -1 && domY != -1)
-            {
-                XYPair *dom = new XYPair(domX, domY);
-                newRule->setDominantPointStrict(dom);
-            }
-
-
-            rulesSet->insert(newRule);
-        }
-        this->preStoredRules->insert(std::pair<string, set<Rule*>*>(key, rulesSet));
-    }
-
-    //load attributes
-    Json::Value attributes = root["attr"];
-    for(Json::Value::iterator att = attributes.begin(); att != attributes.end(); ++att)
-    {
-        Json::Value currentAttr = *att;
-        string attrName = currentAttr.get("name","").asString();
-        Json::Value vals = currentAttr["val"];
-        vector<string> *values = new vector<string>();
-        for(Json::Value::iterator curr = vals.begin(); curr != vals.end(); ++curr)
-        {
-            Json::Value currentVal = *curr;
-            string value = currentVal.asString();
-            values->push_back(value);
-        }
-
-        Json::Value name = currentAttr["names"];
-        vector<string> *names = new vector<string>();
-        for(Json::Value::iterator curr = name.begin(); curr != name.end(); ++curr)
-        {
-            Json::Value currentVal = *curr;
-            string value = currentVal.asString();
-            names->push_back(value);
-        }
-
-
-        Attribute *newAttr = new Attribute(new string(attrName),values,names);
-
-        this->addAttribute(newAttr);
-    }*/
 }
 
