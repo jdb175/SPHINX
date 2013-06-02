@@ -396,6 +396,9 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
     }
 
     set<void*> hypotheses_names;
+    set<void*> *maxSets = new set<void*>[csv.number_of_columns()];
+    set<void*> *minSets = new set<void*>[csv.number_of_columns()];
+
     bitset<MAX_HYPOTHESESES> *bitsetsMin = new bitset<MAX_HYPOTHESESES>[csv.number_of_columns()];
     bitset<MAX_HYPOTHESESES> *bitsetsMax = new bitset<MAX_HYPOTHESESES>[csv.number_of_columns()];
 
@@ -413,52 +416,43 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
 
         //minimum hypos
         Json::Value minVals = type.get("hypo_less", 0);
-        set<void*> hypothesesMin;
         //get them from json
-        cout << "   *Minimum Hypotheses: ";
+        cout << "   *Minimum Hypotheses:"<<endl;
 
         for(Json::Value::iterator minIt = minVals.begin(); minIt != minVals.end(); ++minIt) {
             Json::Value str = *minIt;
-            hypothesesMin.insert((void*) new string(str.asString()));
-            hypotheses_names.insert((void*) new string(str.asString()));
-
-            if(minIt != minVals.begin()){
-                cout << " and";
-            }
-            cout << " " << str.asString();
+            void* val = addHypothesisObject(str.asString(), &hypotheses_names);
+            minSets[type.get("column", 0).asInt()].insert(val);
         }
-        cout << endl;
-
-        //create the bitset
-        bitsetsMin[type.get("column", 0).asInt()] = universe.bitset_representation(hypothesesMin);
 
         //maximum hypos
         Json::Value maxVals = type.get("hypo_more", 0);
-        set<void*> hypothesesMax;
         //get them from json
-        cout << "   *Maximum Hypotheses: ";
+        cout << "   *Maximum Hypotheses:"<<endl;
         for(Json::Value::iterator maxIt = maxVals.begin(); maxIt != maxVals.end(); ++maxIt) {
             Json::Value str = *maxIt;
-            hypothesesMax.insert((void*) new string(str.asString()));
-            hypotheses_names.insert((void*) new string(str.asString()));
-
-            if(maxIt != maxVals.begin()){
-                cout << " and";
-            }
-            cout << " " << str.asString();
+            void* val = addHypothesisObject(str.asString(), &hypotheses_names);
+            maxSets[type.get("column", 0).asInt()].insert(val);
         }
         cout << endl;
-        //create the bitset
-        bitsetsMax[type.get("column", 0).asInt()] = universe.bitset_representation(hypothesesMax);
-
-        cout << "   *" << bitsetsMin[type.get("column", 0).asInt()] << endl;
-        cout << "   *" << bitsetsMax[type.get("column", 0).asInt()] << endl;
     }
 
     //add all hypothesis permutations
     universe.add_hypotheseses(hypotheses_names);
 
-    return;
+    //create bitsets
+    //create the bitset
+    cout << "****Bitsets:\n";
+    for(Json::Value::iterator evidenceIterator = evidenceType.begin(); evidenceIterator != evidenceType.end(); ++evidenceIterator) {
+        Json::Value type = *evidenceIterator;
+        bitsetsMax[type.get("column", 0).asInt()] = universe.bitset_representation(maxSets[type.get("column", 0).asInt()]);
+        bitsetsMin[type.get("column", 0).asInt()] = universe.bitset_representation(minSets[type.get("column", 0).asInt()]);
+
+        cout << "   *" << bitsetsMax[type.get("column", 0).asInt()] << endl;
+        cout << "   *" << bitsetsMin[type.get("column", 0).asInt()] << endl;
+    }
+    cout << endl;
+
     //now iterate through csv file
     for(int i=0; i<csv.number_of_rows(); i++) {
         vector<int> frame = csv.row(i);
@@ -505,4 +499,26 @@ void PSpaceIndex::loadPSpaceIndexFromFile(string* file)
         cout << "    *** Final Classification: "<< *hypothesis << endl;
     }
 }
+
+/**
+ * @brief PSpaceIndex::addHypothesisObject attempts to add a hypothesis object representing the
+ * given string. If one already exists in the given set then it returns the existing object
+ * @param hypothesisName the string to add
+ * @param existingHypotheses the set of hypothesis obejcts
+ * @return an object representing the given hypothesis
+ */
+void *PSpaceIndex::addHypothesisObject(string hypothesisName, set<void*>*existingHypotheses){
+    //iterate through set
+    for(set<void*>::iterator it = existingHypotheses->begin(); it != existingHypotheses->end(); ++it) {
+        if(hypothesisName.compare(*((string*)*it)) == 0) {
+            cout << "    -Found '" << hypothesisName << "', returning." << endl;
+            return *it;
+        }
+    }
+    cout << "    -Failed to find '" << hypothesisName << "', adding."<<endl;
+    void* temp = (void*) new string(hypothesisName);
+    existingHypotheses->insert(temp);
+    return temp;
+}
+
 

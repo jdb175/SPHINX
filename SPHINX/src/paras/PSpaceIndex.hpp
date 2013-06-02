@@ -40,6 +40,7 @@ namespace SPHINXProgram
             set<Rule*> *findRules(double support, double confidence);
             set<Rule*> *findRules_wr(double support, double confidence);
 			string* getHashForSupportConfidence(double support, double confidence);
+            void *addHypothesisObject(string hypothesisName, set<void*>*existingHypotheses);
 			void loadPSpaceIndexFromFile(string *fileName);
 
 			//instance fields.
