@@ -9,12 +9,13 @@
 using namespace std;
 using namespace SPHINXProgram;
 
-Nugget::Nugget(double belief, double plausiblity, string hypothesis, string evidenceType)
+Nugget::Nugget(double belief, double plausiblity, string hypothesis, string evidenceType, vector<double> values)
 {
     this->_belief = belief;
     this->_plausibility = plausibility;
     this->hypothesis = hypothesis;
     this->evidenceType = evidenceType;
+    this->values = values;
 }
 
 Nugget::~Nugget()

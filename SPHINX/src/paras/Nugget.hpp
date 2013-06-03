@@ -17,7 +17,7 @@ namespace SPHINXProgram
             string evidenceType;
 
 		public:
-            Nugget(double belief, double plausiblity, string hypothesis, string evidenceType);
+            Nugget(double belief, double plausiblity, string hypothesis, string evidenceType, vector<double> values);
             ~Nugget();
 
             double getBelief();
@@ -25,8 +25,7 @@ namespace SPHINXProgram
 
             Json::Value jsonify();
 
-            vector<string*> *displayAnte;
-            vector<string*> *displayCons;
+            vector<double> values;
 
             bool operator<(Nugget *other);
             bool operator>(Nugget *other);

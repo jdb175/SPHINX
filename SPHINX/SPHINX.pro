@@ -71,7 +71,7 @@ HEADERS += \
     src/Hypo/dempstershafer.hpp \
     src/Hypo/learningclassificator.hpp \
     src/graphical/NPoint.hpp \
-    src/paras/NPoint
+    src/paras/Nugget.hpp
 
 SOURCES += \
     src/util/Convert.cpp \

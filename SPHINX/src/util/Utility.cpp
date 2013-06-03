@@ -109,9 +109,9 @@ namespace SPHINXProgram
 				Nugget* ar = listOfRules->at(i);
 				cout << endl;
 				cout << i << endl;
-				cout << "Antecedent: " << *ar->XToListString() << "\n";
-				cout << "Consequent: " << *ar->YToListString() << "\n";
-				cout << "Support: " << ar->getSupport() << ", Confidence: " << ar->getConfidence() << endl;
+                //cout << "Antecedent: " << *ar->XToListString() << "\n";
+                //cout << "Consequent: " << *ar->YToListString() << "\n";
+                //cout << "Support: " << ar->getSupport() << ", Confidence: " << ar->getConfidence() << endl;
 			}
 		}
 
