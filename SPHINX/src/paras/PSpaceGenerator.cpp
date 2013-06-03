@@ -19,7 +19,7 @@ using namespace SPHINXProgram;
 
 struct rComp
 {
-    bool operator()(Rule *i, Rule *j)
+    bool operator()(Nugget *i, Nugget *j)
     {
         double lFrontSupp = i->getSupport();
         double rFrontSupp = j->getSupport();
@@ -38,7 +38,7 @@ struct rComp
  */
 void PSpaceGenerator::initializePSpaceGenerator()
 {
-	strongRulesList = new vector<Rule*>();
+	strongRulesList = new vector<Nugget*>();
     domain = new set<string>();
 	frequentItemsDictionary = new map<string, double>();
     totalOccurences = 0;
@@ -356,7 +356,7 @@ void PSpaceGenerator::buildRuleFromStr(string str)
 
         double d4 = Convert::stringToDouble(s4) / totalOccurences;
         double d3 = Convert::stringToDouble(s3);
-		Rule* NewRule = new Rule(a1, a2, d4, d3, NULL);
+		Nugget* NewRule = new Nugget(a1, a2, d4, d3, NULL);
 		strongRulesList->push_back(NewRule);
 
 	}
@@ -378,7 +378,7 @@ void PSpaceGenerator::findStableRegions()
 	//create a point for each strong rule.
 	for(unsigned int i = 0; i < strongRulesList->size(); i++)
 	{
-		Rule *ar = strongRulesList->at(i);
+		Nugget *ar = strongRulesList->at(i);
 		SuppConf = new XYPair(ar->getSupport(), ar->getConfidence());
 		pSpacePoints->push_back(SuppConf); //add each point.
 	}
@@ -395,7 +395,7 @@ void PSpaceGenerator::findStableRegions()
 /**
 * Builds the redundancy index from the PSpaceIndex.
 */
-vector<Rule*> *PSpaceGenerator::buildRedund()
+vector<Nugget*> *PSpaceGenerator::buildRedund()
 {
 	double support = 0;
 
@@ -411,7 +411,7 @@ vector<Rule*> *PSpaceGenerator::buildRedund()
 	{
 		supportStr = 0;
 		support = 0;
-		Rule* currentRule = strongRulesList->at(i);
+		Nugget* currentRule = strongRulesList->at(i);
 
 		//below is for simple dominating point
 		vector<string*> *strX = Utility::numericalOrder(currentRule->getX(), false);
@@ -497,10 +497,10 @@ vector<Rule*> *PSpaceGenerator::buildRedund()
  * Store the rules based on confidence and support to be indexed into later.
  * @param lstStrongRules the list of rules to be stored.
  */
-map<string, set<Rule*>*> *PSpaceGenerator::storeRules()
+map<string, set<Nugget*>*> *PSpaceGenerator::storeRules()
 {
 	cout << "Storing rules." << endl;
-    map<string, set<Rule*>*> *preRules = new map<string, set<Rule*>*>();
+    map<string, set<Nugget*>*> *preRules = new map<string, set<Nugget*>*>();
     int ruleCount = 0;
 	string *threshold;
 	long long threshold_long;
@@ -515,7 +515,7 @@ map<string, set<Rule*>*> *PSpaceGenerator::storeRules()
 	int size = strongRulesList->size();
 	for(int i = 0; i < size; i++)
 	{
-		Rule *rule = strongRulesList->at(i);
+		Nugget *rule = strongRulesList->at(i);
 
 		//translate the support and confidence into a string that can be used to index the rules.
 		double supp = rule->getSupport();
@@ -530,14 +530,14 @@ map<string, set<Rule*>*> *PSpaceGenerator::storeRules()
 
 		if ((currentIndex != 0) && ((finalConfidence != pastConf) || (finalSupport != pastSupp)))
 		{
-            set<Rule*> *copiedList = new set<Rule*>();
+            set<Nugget*> *copiedList = new set<Nugget*>();
 			//copy over the current rule to the preRules.
 			for(int j = 0; j < currentIndex-pastIndex; j++)
 			{
                 copiedList->insert(strongRulesList->at(pastIndex + j));
 			}
 
-            preRules->insert(std::pair<string,set<Rule*>*>(*threshold,copiedList));
+            preRules->insert(std::pair<string,set<Nugget*>*>(*threshold,copiedList));
             ruleCount += copiedList->size();
 			pastIndex = currentIndex;
 		}
@@ -552,14 +552,14 @@ map<string, set<Rule*>*> *PSpaceGenerator::storeRules()
 
 	threshold = Convert::longToString(temp);
 
-    set<Rule*> *copiedList = new set<Rule*>();
+    set<Nugget*> *copiedList = new set<Nugget*>();
 	//copy over the current rule to the preRules.
 	for(int i = 0; i < currentIndex-pastIndex; i++)
 	{
         copiedList->insert(strongRulesList->at(pastIndex + i));
 	}
 
-    preRules->insert(std::pair<string,set<Rule*>*>(*threshold,copiedList));
+    preRules->insert(std::pair<string,set<Nugget*>*>(*threshold,copiedList));
     ruleCount += copiedList->size();
 
     cout << "Rules Saved: " << ruleCount << endl;

@@ -1,5 +1,5 @@
 #include "RuleDetailView.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "paras/Attribute.hpp"
 
 using namespace SPHINXProgram::Graphical;

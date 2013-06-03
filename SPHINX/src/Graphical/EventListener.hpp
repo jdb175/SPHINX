@@ -1,6 +1,6 @@
 #ifndef EVENTLISTENER_H
 #define EVENTLISTENER_H
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include "graphical/IndexUpdateEvent.hpp"
 
 namespace SPHINXProgram
@@ -10,7 +10,7 @@ namespace SPHINXProgram
         class EventListener
         {
             public:
-                virtual void selectStableRegions(Nugget *primarySR, Nugget *secondarySR) = 0;
+                virtual void selectStableRegions(NPoint *primarySR, NPoint *secondarySR) = 0;
                 virtual void applicationSizeChanged(int width, int height) = 0;
                 virtual void setRuleMode(RuleMode ruleMode) = 0;
                 virtual void updateIndexInfo(IndexUpdateEvent e) = 0;

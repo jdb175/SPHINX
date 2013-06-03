@@ -6,7 +6,7 @@
 #include <QTextEdit>
 #include <vector>
 #include "paras/Attribute.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ namespace SPHINXProgram
             public:
                 explicit RuleDetailView(QWidget *parent = 0, bool showLegend = false);
                 void setRuleCount(int ruleCount);
-                void setSelectedRule(Rule* ru);
+                void setSelectedRule(Nugget* ru);
                 void updateAttributes(vector<Attribute*> *attr);
                 void resize(int w, int h);
                 void showDetail(bool show);

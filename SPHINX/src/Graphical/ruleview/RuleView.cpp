@@ -31,7 +31,7 @@ void RuleView::paintEvent(QPaintEvent *e)
     painter.drawText(width() / 2 - fm.width("Evidence View")/2, 30, "Evidence View");
 }
 
-void RuleView::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
+void RuleView::selectStableRegions(NPoint *primarySR, NPoint *secondarySR)
 {
     doubRT->setVisible(false);
     singRT->setVisible(true);

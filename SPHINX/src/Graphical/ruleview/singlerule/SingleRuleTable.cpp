@@ -6,7 +6,7 @@
 #include <set>
 
 #include "graphical/ruleview/singlerule/SingleRuleTable.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "graphical/GUI.hpp"
 #include "util/Utility.hpp"
 #include "graphical/ruleview/singlerule/FilterEditor.hpp"
@@ -36,7 +36,7 @@ SingleRuleTable::~SingleRuleTable()
  */
 void SingleRuleTable::buildTable()
 {
-    rowRule = new vector<Rule*>();
+    rowRule = new vector<Nugget*>();
     tableModel = new QStandardItemModel(this);
     resetTable();
 
@@ -69,16 +69,16 @@ void SingleRuleTable::buildInfoBox()
  * @brief RuleTable::populateTable populates the table with the given rules
  * @param rules to be added to the table
  */
-void SingleRuleTable::populateTable(set<Rule*> *rules)
+void SingleRuleTable::populateTable(set<Nugget*> *rules)
 {
     resetTable();
 
     string *buf = new string();
     rowRule->clear();
     int rowCount = 0;
-    for(set<Rule*>::iterator i = rules->begin(); i != rules->end(); ++i)
+    for(set<Nugget*>::iterator i = rules->begin(); i != rules->end(); ++i)
     {
-        Rule *ru = *i;
+        Nugget *ru = *i;
 
         vector<string*> *toDisplayX = ru->getX();
         if(ru->displayAnte->size() > 0) toDisplayX = ru->displayAnte;
@@ -124,7 +124,7 @@ void SingleRuleTable::updateRuleSelection()
         detailView->setSelectedRule(NULL);
         return;
     }
-    Rule *ruleForRow = rowRule->at(selectedIndices.at(0).row());
+    Nugget *ruleForRow = rowRule->at(selectedIndices.at(0).row());
     detailView->setSelectedRule(ruleForRow);
 }
 
@@ -193,7 +193,7 @@ void SingleRuleTable::applicationSizeChanged(int width, int height)
     normalizeColumnWidths();
 }
 
-void SingleRuleTable::updateRules(set<Rule *> *newRules)
+void SingleRuleTable::updateRules(set<Nugget *> *newRules)
 {
     resetAll();
     detailView->setSelectedRule(NULL);

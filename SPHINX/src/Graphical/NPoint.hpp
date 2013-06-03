@@ -4,7 +4,7 @@
 #include <set>
 
 #include "graphical/ruleview/singlerule/glyph/Glyph.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "graphical/color/ColorMap.h"
 #include "graphical/Shapes/Shape.h"
 
@@ -21,11 +21,11 @@ namespace SPHINXProgram
             ALL = 1
         };
 
-        class Nugget
+        class NPoint
         {
             public:
-                Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr);
-                ~Nugget();
+                NPoint (ColorMap *cMap, double sup, double conf, set<Nugget*> *allRules, set<Nugget*> *uniqueRules, set<Nugget*> *allRules_nr, set<Nugget*> *uniqueRules_nr);
+                ~NPoint();
                 void fullDelete();
                 void draw(QPainter *p);
                 void setXY(int xPos, int yPos);
@@ -41,14 +41,14 @@ namespace SPHINXProgram
                 void highlight();
                 QColor baseColor;
                 QColor curColor;
-                set<Rule*> *uniqueRules;
-                set<Rule*> *uniqueRules_nr;
-                set<Rule*> *allRules;
-                set<Rule*> *allRules_nr;
-                set<Rule*> *getRules(RuleMode mode, bool includeRedundancies);
+                set<Nugget*> *uniqueRules;
+                set<Nugget*> *uniqueRules_nr;
+                set<Nugget*> *allRules;
+                set<Nugget*> *allRules_nr;
+                set<Nugget*> *getRules(RuleMode mode, bool includeRedundancies);
 
-                bool operator < (Nugget);
-                bool operator > (Nugget);
+                bool operator < (NPoint);
+                bool operator > (NPoint);
 
             protected:
                 Shape *shape;

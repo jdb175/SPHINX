@@ -1,4 +1,4 @@
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include <algorithm>
 #include "graphical/ruleview/singlerule/glyph/GlyphView.hpp"
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
@@ -122,7 +122,7 @@ void GlyphView::refreshGlyphs()
     glyphs = gDisplay->updateGlyphs(displayRules);
 }
 
-void GlyphView::updateRules(set<Rule*> *rules)
+void GlyphView::updateRules(set<Nugget*> *rules)
 {
     displayRules = rules;
     this->refreshGlyphs();

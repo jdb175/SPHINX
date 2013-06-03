@@ -97,7 +97,7 @@ void PARAS::closeIndex()
  * Query the active pspaceindex.
  * @return vector of rules or NULL if there is no active pspaceindex.
  */
-set<Rule*> *PARAS::queryActiveIndex(double support, double confidence, bool redun)
+set<Nugget*> *PARAS::queryActiveIndex(double support, double confidence, bool redun)
 {
     if(activeIndex == NULL) return NULL;
 
@@ -109,7 +109,7 @@ vector<XYPair*> *PARAS::getActiveStableRegionPoints()
     return activeIndex->getStableRegionPoints();
 }
 
-set<Rule*> *PARAS::getRulesForStableRegionPoint(XYPair *sr, bool unique, bool redun)
+set<Nugget*> *PARAS::getRulesForStableRegionPoint(XYPair *sr, bool unique, bool redun)
 {
     if(unique)
     {

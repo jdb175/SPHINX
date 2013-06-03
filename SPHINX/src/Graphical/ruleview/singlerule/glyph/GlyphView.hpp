@@ -9,7 +9,7 @@
 #include <QLabel>
 #include "graphical/color/ColorMap.h"
 #include "graphical/ruleview/singlerule/glyph/GlyphDisplay.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "graphical/ruleview/singlerule/glyph/Glyph.hpp"
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 #include "graphical/EventListener.hpp"
@@ -24,7 +24,7 @@ namespace SPHINXProgram
             public:
                 GlyphView(QWidget *parent, ColorMap *coloring);
 
-                void updateRules(set<Rule*> *rules);
+                void updateRules(set<Nugget*> *rules);
                 void applicationSizeChanged(int width, int height);
                 void updateAttributes(vector<Attribute*> *attr);
 
@@ -69,7 +69,7 @@ namespace SPHINXProgram
                 vector<Attribute*> *attributeList;
 
                 vector<Glyph*> *glyphs;
-                set<Rule*> *displayRules;
+                set<Nugget*> *displayRules;
 
                 int detailOffset;
 

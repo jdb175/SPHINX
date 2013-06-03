@@ -21,7 +21,7 @@ namespace SPHINXProgram
                 explicit RuleView(QWidget *parent, EventController *evCont, ColorMap *coloring);
 
                 //event listener
-                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
+                void selectStableRegions(NPoint *primarySR, NPoint *secondarySR);
                 void applicationSizeChanged(int width, int height);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);

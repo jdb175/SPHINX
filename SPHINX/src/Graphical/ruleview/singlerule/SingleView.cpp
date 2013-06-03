@@ -231,7 +231,7 @@ void SingleView::resetFilter()
 }
 
 
-void SingleView::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
+void SingleView::selectStableRegions(NPoint *primarySR, NPoint *secondarySR)
 {
     this->selectedRegion = primarySR;
     this->refreshRules();

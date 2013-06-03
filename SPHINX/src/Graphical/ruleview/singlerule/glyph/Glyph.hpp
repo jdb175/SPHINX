@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QLine>
 #include "graphical/color/ColorMap.h"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "paras/Attribute.hpp"
 
 using namespace std;
@@ -16,7 +16,7 @@ namespace SPHINXProgram
         class Glyph
         {
             public:
-                Glyph(Rule *rule, vector<Attribute*> *attributes, ColorMap *coloring);
+                Glyph(Nugget *rule, vector<Attribute*> *attributes, ColorMap *coloring);
                 Glyph(ColorMap *coloring);
                 ~Glyph();
                 Glyph& operator=(const Glyph &source);
@@ -34,7 +34,7 @@ namespace SPHINXProgram
 
                 bool contains(double x, double y);
 
-                Rule *rule;
+                Nugget *rule;
                 double simval;
                 bool border;
 

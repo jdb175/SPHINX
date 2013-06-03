@@ -1,7 +1,7 @@
 #include <algorithm>
 
-#include "paras/Rule.hpp"
-#include "graphical/Nugget.hpp"
+#include "paras/Nugget.hpp"
+#include "graphical/NPoint"
 #include "graphical/Shapes/SCircle.h"
 #include "graphical/Shapes/STriangle.h"
 #include "graphical/Shapes/SRect.hpp"
@@ -11,7 +11,7 @@
 using namespace SPHINXProgram;
 using namespace SPHINXProgram::Graphical;
 
-Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, set<Rule*> *uniqueRules, set<Rule*> *allRules_nr, set<Rule*> *uniqueRules_nr)
+NPoint::NPoint (ColorMap *cMap, double sup, double conf, set<Nugget*> *allRules, set<Nugget*> *uniqueRules, set<Nugget*> *allRules_nr, set<Nugget*> *uniqueRules_nr)
 {
     this->colorMap = cMap;
     support = sup;
@@ -34,29 +34,29 @@ Nugget::Nugget (ColorMap *cMap, double sup, double conf, set<Rule*> *allRules, s
     radius = 10;
 }
 
-Nugget::~Nugget(){}
+NPoint::~NPoint(){}
 
-void Nugget::fullDelete()
+void NPoint::fullDelete()
 {
     allRules->clear();
     uniqueRules->clear();
     allRules_nr->clear();
     uniqueRules_nr->clear();
 
-    set<Rule*>().swap(*allRules_nr);
-    set<Rule*>().swap(*uniqueRules_nr);
-    set<Rule*>().swap(*allRules);
-    set<Rule*>().swap(*uniqueRules);
+    set<Nugget*>().swap(*allRules_nr);
+    set<Nugget*>().swap(*uniqueRules_nr);
+    set<Nugget*>().swap(*allRules);
+    set<Nugget*>().swap(*uniqueRules);
     delete this;
 }
 
 
-void Nugget::setXY(int xPos, int yPos){
+void NPoint::setXY(int xPos, int yPos){
     this->xPos = xPos;
     this->yPos = yPos;
 }
 
-void Nugget::draw(QPainter *p)
+void NPoint::draw(QPainter *p)
 {
     //Draws the stable region rectangle
     //updateRect();
@@ -73,13 +73,13 @@ void Nugget::draw(QPainter *p)
     }*/
 }
 
-void Nugget::deselect()
+void NPoint::deselect()
 {
     //Reverts the color to our base
     selected = false;
 }
 
-void Nugget::highlight()
+void NPoint::highlight()
 {
     //Reverts the color to our base
     if(selected)
@@ -88,7 +88,7 @@ void Nugget::highlight()
     curColor = QColor(200,200,200,255);
 }
 
-void Nugget::select(bool secondary)
+void NPoint::select(bool secondary)
 {
     //Changes color to indicate selection
     selected = true;
@@ -102,7 +102,7 @@ void Nugget::select(bool secondary)
     }
 }
 
-set<Rule*> *Nugget::getRules(RuleMode mode,  bool includeRedundancies)
+set<Nugget*> *NPoint::getRules(RuleMode mode,  bool includeRedundancies)
 {
     switch(mode)
     {
@@ -119,14 +119,14 @@ set<Rule*> *Nugget::getRules(RuleMode mode,  bool includeRedundancies)
     }
 }
 
-bool Nugget::isClicked(double sup, double conf) {
+bool NPoint::isClicked(double sup, double conf) {
     return shape->IncludesPoint(sup, conf);
 }
 
-bool Nugget::operator < (Nugget s){
+bool NPoint::operator < (NPoint s){
     return (support < s.support || (confidence < s.confidence && support == s.support));
 }
 
-bool Nugget::operator > (Nugget s){
+bool NPoint::operator > (NPoint s){
     return (support > s.support || (confidence > s.confidence && support == s.support));
 }

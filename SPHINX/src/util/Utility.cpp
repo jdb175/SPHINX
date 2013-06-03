@@ -5,7 +5,7 @@
 #include <functional>
 #include <cctype>
 #include "util/Utility.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "paras/XYPair.hpp"
 #include "util/Convert.hpp"
 
@@ -101,12 +101,12 @@ namespace SPHINXProgram
 		 * @param listOfRules the list of rules to print
 		 * @param msg the message to print along with the list
 		 */
-		void printRulesVector(vector<Rule*> *listOfRules, string msg)
+		void printRulesVector(vector<Nugget*> *listOfRules, string msg)
 		{
 			cout << msg << endl;
 
-			for(std::vector<Rule*>::size_type i = 0; i != listOfRules->size(); i++){
-				Rule* ar = listOfRules->at(i);
+			for(std::vector<Nugget*>::size_type i = 0; i != listOfRules->size(); i++){
+				Nugget* ar = listOfRules->at(i);
 				cout << endl;
 				cout << i << endl;
 				cout << "Antecedent: " << *ar->XToListString() << "\n";

@@ -1,5 +1,5 @@
 #include "graphical/EventController.hpp"
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include "graphical/EventListener.hpp"
 
 using namespace SPHINXProgram::Graphical;
@@ -28,7 +28,7 @@ void EventController::deregisterListener(EventListener *el)
     }
 }
 
-void EventController::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
+void EventController::selectStableRegions(NPoint *primarySR, NPoint *secondarySR)
 {
     for(size_t i = 0; i < listeners->size(); i++)
     {

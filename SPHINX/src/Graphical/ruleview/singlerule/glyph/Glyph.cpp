@@ -32,7 +32,7 @@ Glyph::Glyph(ColorMap *coloring)
     this->border = false;
 }
 
-Glyph::Glyph(Rule *rule, vector<Attribute*> *attributes, ColorMap *coloring)
+Glyph::Glyph(Nugget *rule, vector<Attribute*> *attributes, ColorMap *coloring)
 {
     this->x = 0;
     this->gx = 0;

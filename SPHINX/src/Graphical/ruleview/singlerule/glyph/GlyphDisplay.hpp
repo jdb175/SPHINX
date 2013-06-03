@@ -6,7 +6,7 @@
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 #include "graphical/color/ColorMap.h"
 #include <QWidget>
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include <set>
 
 namespace SPHINXProgram
@@ -18,7 +18,7 @@ namespace SPHINXProgram
                 Q_OBJECT
             public:
                 GlyphDisplay(QWidget *parent, RuleDetailView *detail, GlyphZoom *zoom, ColorMap *coloring);
-                vector<Glyph*>* updateGlyphs(set<Rule*> *displayRules);
+                vector<Glyph*>* updateGlyphs(set<Nugget*> *displayRules);
                 void updateAttributeInfo(vector<Attribute*> *attributeList);
                 void toggleConnections(bool connect);
                 void toggleFill(bool filling);

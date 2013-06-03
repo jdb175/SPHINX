@@ -126,7 +126,7 @@ void DoubleRuleTable::resetAll()
 
 
 //event listeners
-void DoubleRuleTable::selectStableRegions(Nugget *primarySR, Nugget *secondarySR)
+void DoubleRuleTable::selectStableRegions(NPoint *primarySR, NPoint *secondarySR)
 {
     primarySelection = primarySR;
     secondarySelection = secondarySR;

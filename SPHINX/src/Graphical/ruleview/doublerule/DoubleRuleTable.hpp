@@ -19,7 +19,7 @@ namespace SPHINXProgram
                 DoubleRuleTable(QWidget *par, EventController *evCont);
 
                 //event listener
-                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
+                void selectStableRegions(NPoint *primarySR, NPoint *secondarySR);
                 void applicationSizeChanged(int width, int height);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);
@@ -34,8 +34,8 @@ namespace SPHINXProgram
 
                 bool redun;
                 RuleMode mode;
-                Nugget *primarySelection;
-                Nugget *secondarySelection;
+                NPoint *primarySelection;
+                NPoint *secondarySelection;
 
                 QTableView *primaryTable;
                 QTableView *secondaryTable;

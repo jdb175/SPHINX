@@ -12,7 +12,7 @@
 #include <QLineEdit>
 
 #include "graphical/color/ColorMap.h"
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include "graphical/EventController.hpp"
 #include "graphical/color/ColorManager.h"
 #include "graphical/color/ColorSelector.h"
@@ -35,7 +35,7 @@ namespace SPHINXProgram
             bool secondarySelect;
 
             void setConfig(bool bgLines, bool skyline, bool include, RuleMode ruleMode, int cardinality, int granularity);
-            void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
+            void selectStableRegions(NPoint *primarySR, NPoint *secondarySR);
             void applicationSizeChanged(int width, int height);
             void updateRedundancy(bool include);
             void setRuleMode(RuleMode ruleMode);
@@ -62,7 +62,7 @@ namespace SPHINXProgram
             void updateShownGranularity(int g);
            private:
             void buildZoomFrame();
-            void updateStableRect(Nugget *s);
+            void updateStableRect(NPoint *s);
             void paintEvent(QPaintEvent *);
             void drawGraph (QPainter *painter);
             void drawStableRegions(QPainter *painter);
@@ -71,8 +71,8 @@ namespace SPHINXProgram
             void drawCursorLines(QPainter *painter);
             void drawSignificanceSliders(QPainter *painter);
             void highlightDominatingRegions();
-            Nugget *getClickedRegion(QMouseEvent *event);
-            Nugget *getRegionFromPoint(double sup, double conf);
+            NPoint *getClickedRegion(QMouseEvent *event);
+            NPoint *getRegionFromPoint(double sup, double conf);
             void normalizeZoom();
             void panDragged(QMouseEvent *event, QPoint dragLast);
             void zoomScrolled(QWheelEvent* ev);
@@ -87,9 +87,9 @@ namespace SPHINXProgram
 
             EventController *evCont;
 
-            std::vector<Nugget*> *stRegions;
-            Nugget *primarySelectedRegion;
-            Nugget *secondarySelectedRegion;
+            std::vector<NPoint*> *stRegions;
+            NPoint *primarySelectedRegion;
+            NPoint *secondarySelectedRegion;
             vector<XYPair*> highlightedRegions;
             bool mouseDown;
             bool grabbedSupSlider;

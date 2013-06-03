@@ -27,9 +27,9 @@ namespace SPHINXProgram
             bool indexOpen();
             void closeIndex();
 
-            set<Rule*> *queryActiveIndex(double support, double confidence, bool redun);
+            set<Nugget*> *queryActiveIndex(double support, double confidence, bool redun);
             vector<XYPair*> *getActiveStableRegionPoints();
-            set<Rule*> *getRulesForStableRegionPoint(XYPair *sr, bool unique, bool redun);
+            set<Nugget*> *getRulesForStableRegionPoint(XYPair *sr, bool unique, bool redun);
             vector<Attribute*> *getAttributes();
             string getActiveFileName();
 	};

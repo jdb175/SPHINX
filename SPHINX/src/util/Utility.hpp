@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "paras/XYPair.hpp"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ namespace SPHINXProgram
 		bool strSort(string* a, string* b);
 		bool startsWithDigit(string str);
 		
-		void printRulesVector(vector<Rule*> *lstRules, string msg);
+		void printRulesVector(vector<Nugget*> *lstRules, string msg);
 		vector<XYPair*> *distinctPoints(vector<XYPair*> *listOfPoints);
 
         vector<XYPair*> *buildIntersections(vector<XYPair*> *pspacePoints);

@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 #include "graphical/ruleview/singlerule/RuleDetailView.hpp"
 
 using namespace std;
@@ -29,7 +29,7 @@ namespace SPHINXProgram
                 int getColumnPosition(int col);
 
                 //event listener
-                void updateRules(set<Rule*> *newRules);
+                void updateRules(set<Nugget*> *newRules);
                 void applicationSizeChanged(int width, int height);
                 void updateAttributes(vector<Attribute*> *attr);
 
@@ -42,12 +42,12 @@ namespace SPHINXProgram
 
                 QTableView *tableWidget;
                 QStandardItemModel *tableModel;
-                vector<Rule*> *rowRule;
+                vector<Nugget*> *rowRule;
 
                 void buildTable();
                 void buildInfoBox();
 
-                void populateTable(set<Rule*> *rules);
+                void populateTable(set<Nugget*> *rules);
                 void resetAll();
                 void resetTable();
                 void normalizeColumnWidths();

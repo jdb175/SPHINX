@@ -8,7 +8,6 @@ HEADERS += \
     src/paras/PARAS.hpp \
     src/paras/PSpaceGenerator.hpp \
     src/paras/PSpaceIndex.hpp \
-    src/paras/Rule.hpp \
     src/paras/XYPair.hpp \
     src/graphical/EventController.hpp \
     src/graphical/EventListener.hpp \
@@ -65,13 +64,14 @@ HEADERS += \
     src/util/mds/IP_Matrix.h \
     src/util/mds/IP_Array.h \
     src/util/pca/PCA.h \
-    src/graphical/Nugget.hpp \
     src/graphical/Shapes/SRect.hpp \
     src/graphical/Shapes/SCircle.h \
     src/graphical/Shapes/STriangle.h \
     src/Hypo/csvreader.hpp \
     src/Hypo/dempstershafer.hpp \
-    src/Hypo/learningclassificator.hpp
+    src/Hypo/learningclassificator.hpp \
+    src/graphical/NPoint.hpp \
+    src/paras/NPoint
 
 SOURCES += \
     src/util/Convert.cpp \
@@ -80,7 +80,6 @@ SOURCES += \
     src/paras/PARAS.cpp \
     src/paras/PSpaceGenerator.cpp \
     src/paras/PSpaceIndex.cpp \
-    src/paras/Rule.cpp \
     src/paras/XYPair.cpp \
     src/graphical/EventController.cpp \
     src/graphical/GUI.cpp \
@@ -121,14 +120,15 @@ SOURCES += \
     src/util/mds/MDS_Kruskal.cpp \
     src/util/mds/MDS_Embedding.cpp \
     src/util/pca/PCA.cpp \
-    src/graphical/Nugget.cpp \
     src/graphical/Shapes/SRect.cpp \
     src/graphical/Shapes/SCircle.cpp \
     src/graphical/Shapes/STriangle.cpp \
     src/Hypo/csvreader.cpp \
     src/Hypo/dempstershafer.cpp \
     src/Hypo/learningclassificator.cpp \
-    src/Hypo/sleep.cpp
+    src/Hypo/sleep.cpp \
+    src/graphical/NPoint.cpp \
+    src/paras/Nugget.cpp
 
 INCLUDEPATH += src
 

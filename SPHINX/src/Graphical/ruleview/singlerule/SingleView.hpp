@@ -23,7 +23,7 @@ namespace SPHINXProgram
                 SingleView(QWidget *parent = 0, EventController *evCont = 0, ColorMap *colorMapping = 0);
 
                 //event listener
-                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
+                void selectStableRegions(NPoint *primarySR, NPoint *secondarySR);
                 void applicationSizeChanged(int width, int height);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);
@@ -43,9 +43,9 @@ namespace SPHINXProgram
                 void buildFilterBox();
                 void refreshRules();
 
-                set<Rule*> *currentRules;
+                set<Nugget*> *currentRules;
 
-                Nugget *selectedRegion;
+                NPoint *selectedRegion;
                 RuleMode ruleMode;
                 bool includeRedundancies;
 

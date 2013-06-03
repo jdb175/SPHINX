@@ -19,7 +19,7 @@
 #include "graphical/ruleview/RuleView.hpp"
 #include "paras/PARAS.hpp"
 #include "graphical/PSpaceGraph.hpp"
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include "graphical/EventController.hpp"
 #include "util/Utility.hpp"
 
@@ -30,7 +30,7 @@ using namespace SPHINXProgram;
 using namespace SPHINXProgram::Graphical;
 
 struct compPointer {
-    bool operator() (Nugget* i,Nugget* j) { return (*i<*j);}
+    bool operator() (NPoint* i,NPoint* j) { return (*i<*j);}
 } compP;
 
 struct compXY {
@@ -52,10 +52,10 @@ GUI::GUI()
     rulePanel = NULL;
     evCont = new EventController(this);
     granularityIndexMap = new map<float, IndexUpdateEvent>();
-    stableRegionRulesALL = new map<XYPair*, set<Rule*>*>();
-    stableRegionRulesUNIQUE = new map<XYPair*, set<Rule*>*>();
-    stableRegionRulesALL_NR = new map<XYPair*, set<Rule*>*>();
-    uniqueRulesLists = new vector< set<Rule*> >();
+    stableRegionRulesALL = new map<XYPair*, set<Nugget*>*>();
+    stableRegionRulesUNIQUE = new map<XYPair*, set<Nugget*>*>();
+    stableRegionRulesALL_NR = new map<XYPair*, set<Nugget*>*>();
+    uniqueRulesLists = new vector< set<Nugget*> >();
     truncateVal = 50;
 
     colorManage = new ColorManager();
@@ -248,27 +248,27 @@ void GUI::updateForLoadedIndex(QString fileChosen)
     {
         for(vector<XYPair*>::iterator i = sPoints->begin(); i != sPoints->end(); ++i)
         {
-            set<Rule*> *allRules_nr = pInstance->getRulesForStableRegionPoint((*i),false,false);
-            set<Rule*> *uRules = pInstance->getRulesForStableRegionPoint((*i),true,true);
-            set<Rule*> *allRules = pInstance->getRulesForStableRegionPoint((*i),false,true);
+            set<Nugget*> *allRules_nr = pInstance->getRulesForStableRegionPoint((*i),false,false);
+            set<Nugget*> *uRules = pInstance->getRulesForStableRegionPoint((*i),true,true);
+            set<Nugget*> *allRules = pInstance->getRulesForStableRegionPoint((*i),false,true);
 
-            stableRegionRulesALL_NR->insert(std::pair<XYPair*,set<Rule*>*>((*i), allRules_nr));
-            stableRegionRulesALL->insert(std::pair<XYPair*,set<Rule*>*>((*i), allRules));
-            stableRegionRulesUNIQUE->insert(std::pair<XYPair*,set<Rule*>*>((*i), uRules));
+            stableRegionRulesALL_NR->insert(std::pair<XYPair*,set<Nugget*>*>((*i), allRules_nr));
+            stableRegionRulesALL->insert(std::pair<XYPair*,set<Nugget*>*>((*i), allRules));
+            stableRegionRulesUNIQUE->insert(std::pair<XYPair*,set<Nugget*>*>((*i), uRules));
         }
     }
 
 
 
-    vector<Nugget*> *stableRegionPoints = new vector<Nugget*>;
-    vector<Nugget*> truncatedRegions;
+    vector<NPoint*> *stableRegionPoints = new vector<NPoint*>;
+    vector<NPoint*> truncatedRegions;
 
 
-    Nugget *s;
+    NPoint *s;
 
-    set<Rule*> *uRules;
-    set<Rule*> *allRules;
-    set<Rule*> *allRulesNR;
+    set<Nugget*> *uRules;
+    set<Nugget*> *allRules;
+    set<Nugget*> *allRulesNR;
 
     
     float sup;
@@ -294,7 +294,7 @@ void GUI::updateForLoadedIndex(QString fileChosen)
     float truncateConf;
     float lastSup = -1;
     float lastConf = -1;
-    Nugget* lastS;
+    NPoint* lastS;
 
     //Runtime granularity control
     //Combine the regions into truncateVal number of bins, to make them more easily visible
@@ -305,12 +305,12 @@ void GUI::updateForLoadedIndex(QString fileChosen)
         conf = sPoints->at(i)->getY();
         sup = sPoints->at(i)->getX();
 
-        set<Rule*> *uniqueRulesCur;
-        set<Rule*> *uniqueRulesCurNR;
+        set<Nugget*> *uniqueRulesCur;
+        set<Nugget*> *uniqueRulesCurNR;
 
         uRules = (*stableRegionRulesUNIQUE)[sPoints->at(i)];
-        uniqueRulesCur = new set<Rule*>(uRules->begin(), uRules->end());
-        uniqueRulesCurNR = new set<Rule*>(uRules->begin(), uRules->end());
+        uniqueRulesCur = new set<Nugget*>(uRules->begin(), uRules->end());
+        uniqueRulesCurNR = new set<Nugget*>(uRules->begin(), uRules->end());
 
         uniqueRulesLists->push_back(*uniqueRulesCur);
 
@@ -322,7 +322,7 @@ void GUI::updateForLoadedIndex(QString fileChosen)
         truncateConf = floor(conf * truncateVal) / truncateVal;
 
         //Create a temporary region with the truncated parameters
-        s = new Nugget (colorMappings, truncateSup, truncateConf, allRules, uniqueRulesCur, allRulesNR, uniqueRulesCurNR);
+        s = new NPoint (colorMappings, truncateSup, truncateConf, allRules, uniqueRulesCur, allRulesNR, uniqueRulesCurNR);
         truncatedRegions.push_back(s);
     }
 
@@ -332,7 +332,7 @@ void GUI::updateForLoadedIndex(QString fileChosen)
 
 
     //Now merge any redundant regions created by the truncation, so that we don't lose any rules
-    for(std::vector<Nugget*>::size_type i = 0; i != truncatedRegions.size(); i++)
+    for(std::vector<NPoint*>::size_type i = 0; i != truncatedRegions.size(); i++)
     {
 
         conf = truncatedRegions[i]->confidence;
@@ -356,10 +356,10 @@ void GUI::updateForLoadedIndex(QString fileChosen)
             //Otherwise just merge it into the last region
 
             //But first we handle redundancies
-            set<Rule*> *rulesToAdd = new set<Rule*>;
-            for(set<Rule*>::iterator j = truncatedRegions[i]->uniqueRules->begin(); j != truncatedRegions[i]->uniqueRules->end(); ++j)
+            set<Nugget*> *rulesToAdd = new set<Nugget*>;
+            for(set<Nugget*>::iterator j = truncatedRegions[i]->uniqueRules->begin(); j != truncatedRegions[i]->uniqueRules->end(); ++j)
             {
-                Rule *rule = *j;
+                Nugget *rule = *j;
 
                 //if the rule has a dominating point, it can only be added as a rule if its dominating point's support or confidence
                 //do not fall within this truncated region. Otherwise, its dominant point should be added instead later on.

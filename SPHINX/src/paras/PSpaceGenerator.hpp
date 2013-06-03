@@ -6,7 +6,7 @@
 #include <vector>
 #include <set>
 #include "PSpaceIndex.hpp"
-#include "Rule.hpp"
+#include "Nugget.hpp"
 
 using namespace std;
 
@@ -34,13 +34,13 @@ namespace SPHINXProgram
 			void readItemSetsFromFile(string *str);
 
 			void findStableRegions();
-			vector<Rule*> *buildRedund();
-            map<string, set<Rule*>*> *storeRules();
+			vector<Nugget*> *buildRedund();
+            map<string, set<Nugget*>*> *storeRules();
 	
 			PSpaceIndex *activeIndex;
             double totalOccurences;
             set<string> *domain;
-            vector<Rule*> *strongRulesList;
+            vector<Nugget*> *strongRulesList;
 			map<string, double> *frequentItemsDictionary;
             bool mapped;
 	};

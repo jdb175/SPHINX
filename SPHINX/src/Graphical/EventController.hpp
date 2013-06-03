@@ -20,7 +20,7 @@ namespace SPHINXProgram
                 void registerListener(EventListener* el);
                 void deregisterListener(EventListener* el);
 
-                void selectStableRegions(Nugget *primarySR, Nugget *secondarySR);
+                void selectStableRegions(NPoint *primarySR, NPoint *secondarySR);
                 void applicationSizeChanged(int appWidth, int appHeight);
                 void setRuleMode(RuleMode ruleMode);
                 void updateIndexInfo(IndexUpdateEvent e);

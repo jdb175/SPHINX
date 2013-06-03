@@ -7,10 +7,10 @@
 #include "paras/PARAS.hpp"
 #include "graphical/PSpaceGraph.hpp"
 #include "graphical/ruleview/RuleView.hpp"
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 #include "graphical/EventController.hpp"
 #include "graphical/GUIEventObject.h"
-#include "paras/Rule.hpp"
+#include "paras/Nugget.hpp"
 
 using namespace SPHINXProgram::Graphical;
 
@@ -55,11 +55,11 @@ namespace SPHINXProgram
                 float truncateVal;
                 bool redundancies;
                 map<float, IndexUpdateEvent> *granularityIndexMap;
-                map<XYPair*, set<Rule*>*> *stableRegionRulesALL;
-                map<XYPair*, set<Rule*>*> *stableRegionRulesUNIQUE;
-                map<XYPair*, set<Rule*>*> *stableRegionRulesALL_NR;
-                map<XYPair*, set<Rule*>*> *stableRegionRulesUNIQUE_NR;
-                vector< set<Rule*> > *uniqueRulesLists;
+                map<XYPair*, set<Nugget*>*> *stableRegionRulesALL;
+                map<XYPair*, set<Nugget*>*> *stableRegionRulesUNIQUE;
+                map<XYPair*, set<Nugget*>*> *stableRegionRulesALL_NR;
+                map<XYPair*, set<Nugget*>*> *stableRegionRulesUNIQUE_NR;
+                vector< set<Nugget*> > *uniqueRulesLists;
 
                 ColorManager *colorManage;
                 ColorSelector *colorSelect;

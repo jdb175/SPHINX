@@ -2,7 +2,7 @@
 #define INDEXUPDATEEVENT_HPP
 #include <vector>
 #include "paras/Attribute.hpp"
-#include "graphical/Nugget.hpp"
+#include "graphical/NPoint"
 
 using namespace SPHINXProgram::Graphical;
 
@@ -13,7 +13,7 @@ namespace SPHINXProgram
         class IndexUpdateEvent
         {
             public:
-                vector<Nugget*> *stableRegions;
+                vector<NPoint*> *stableRegions;
                 pair<double, double> supInterval;
                 pair<double,double> confInterval;
                 pair<int,int> allInterval;
